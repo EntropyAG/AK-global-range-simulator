@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>Arknights Global Range Simulator</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="shortcut icon" type="image/jpg" href="images/icons/favicon.ico" />
+</head>
+
+<body>
+	<img id="sprites" src="images/sprites.png" class="hide" alt="sprites"/>
+	<div class="container">
+		<div class="header">
+			<h2>Arknights Global Range Simulator</h2>
+		</div>
+		<div class="menu">
+			<span id="instructions">You can move Lappland by clicking on the button then on a tile on the board</span>
+			<br />
+			<button id="placeLappland">Move Lappland</button>
+			<button id="addDummy">Add target</button>
+			<br />
+			<form>
+				<label for="maxHP">Max HP</label>
+				<input type="text" id="maxHP"/>
+				<br/>
+				<label for="res">RES</label>
+				<input type="text" id="res"/>
+				<br/>
+			</form>
+			<br/>
+			<button id="startSimulation">Start</button>
+			<button id="pauseSimulation" class="hide">Pause</button>
+			<button id="resetSimulation">Reset</button>
+		</div>
+		<div class="content"><canvas id="game"></canvas></div>
+		<div class="footer">
+			<table>
+				<tr>
+					<td>Expected focused DPS</td>
+					<td>6666</td>
+				</tr>
+				<tr>
+					<td>Expected AoE DoT DPS</td>
+					<td>5555</td>
+				</tr>
+				<tr>
+					<td>Actual focused DPS</td>
+					<td>4444</td>
+				</tr>
+				<tr>
+					<td>Actual AoE DoT DPS</td>
+					<td>3333</td>
+				</tr>
+				<tr>
+					<td>Actual vs expected focused DPS (%)</td>
+					<td>2222</td>
+				</tr>
+				<tr>
+					<td>Actual vs expected AoE DoT DPS (%)</td>
+					<td>1111</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!--
+		"Hurr durr, why arent you using JS modules with imports/exports?"
+		
+		Listen you here you lil' sh*t, we are asking people to directly open the index.html already,
+		do you know what a CORS exception is? Would you rather ask people to disable their browser'
+		security settings just to use this?
+
+		I had to adapt this from another project that actually did use modules, but besides having
+		gameobjects already defined, that's where the comparison ends. The original app was an
+		Electron app.
+
+		Now go back to your hole and trouble me no more, or Warfarin will soon have a new blood donor.
+	-->
+	<script type="text/javascript" src="scripts/core/utils.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/gameobject_template.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/character_template.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/drone_template.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/drones/LappyS3Drone.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/operators/Lappland.js"></script>
+	<script type="text/javascript" src="scripts/gameobjects/enemy/TargetDummy.js"></script>
+
+	<script type="text/javascript" src="scripts/core/renderer.js"></script>
+	<script type="text/javascript" src="scripts/core/game.js"></script>
+	<script type="text/javascript" src="scripts/core/ui.js"></script>
+	<script type="text/javascript">
+		akGame.lappland = new Lappland(1, 1);
+		akGame.dummies.push(new TargetDummy(7.2, 4.3, 10000, 20));
+		akGame.dummies.push(new TargetDummy(4.1, 4.2, 10000, 20));
+		akGame.dummies.push(new TargetDummy(2.2, 6, 10000, 20));
+		akRenderer.display();
+	</script>
+</body>
+
+</html>

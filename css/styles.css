@@ -1,0 +1,91 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+button {
+  background-color: black;
+  color: white;
+  width: 110px;
+  height:40px;
+}
+
+#instructions {
+  border: 1px solid white;
+}
+
+#placeLappland {
+  background-color: #888;
+}
+
+
+#startSimulation {
+  background-color: #55d;
+}
+
+#resetSimulation {
+  background-color: #d55;
+}
+
+#game {
+  background-color: #888;
+}
+
+.hide {
+  display: none;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: 68% auto;
+  background-color: #999;
+  padding: 2px;
+}
+#container > div {
+  background-color: #222;
+  border: 1px solid black;
+  padding: 2px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "footer footer";
+  grid-template-columns: 1fr 3fr;
+  gap: 3px;
+  background-color: #222;
+  padding: 3px;
+}
+.container > div {
+  background-color: #444;
+  padding: 5px;
+}
+.container > div.header {
+  grid-area: header;
+  text-align: center;
+}
+.container > div.menu {
+  grid-area: menu;
+}
+.container > div.content {
+  grid-area: content;
+}
+.container > div.footer {
+  grid-area: footer;
+}
+
+canvas, img {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+    align-items: center;
+    margin: 0 auto;
+    width:100%;
+}

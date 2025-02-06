@@ -1,6 +1,7 @@
 body {
   background-color: black;
   color: white;
+  margin: 0;
 }
 
 button {
@@ -17,7 +18,6 @@ button {
 #placeLappland {
   background-color: #888;
 }
-
 
 #startSimulation {
   background-color: #55d;
@@ -37,7 +37,7 @@ button {
 
 #container {
   display: grid;
-  grid-template-columns: 68% auto;
+  grid-template-columns: 100% auto;
   background-color: #999;
   padding: 2px;
 }
@@ -73,6 +73,7 @@ button {
 }
 .container > div.content {
   grid-area: content;
+  height:800px;
 }
 .container > div.footer {
   grid-area: footer;
@@ -87,5 +88,5 @@ canvas, img {
     -ms-interpolation-mode: nearest-neighbor;
     align-items: center;
     margin: 0 auto;
-    width:100%;
+    height: inherit;
 }

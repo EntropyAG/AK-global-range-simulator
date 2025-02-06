@@ -12,7 +12,8 @@ class Lappland extends Character {
 		this.resIgnore = 0;
 		this.isSiracusanPleasureEnabled = true;
 		this.isS3Enabled = false;
-		this.aoeDotAtkScale = 1.2;
+		this.atkMult = 0;
+		this.inspirationBuff = 0;
 		this.setPotential(0);
 		this.setAlphaWolf(0);
 	}
@@ -53,7 +54,7 @@ class Lappland extends Character {
 	activateS3(){
 		let self = this;
 		this.isS3Enabled = true;
-		this.atkMult = 0.8;
+		this.atkMult += 0.8;
 		/**
 		 * On skill activation, drones are summoned depending on how many there are. For the angles stated below,
 		 * we assume [0;PI*2[ clockwise
@@ -82,19 +83,15 @@ class Lappland extends Character {
 	 */
 	getFinalAtkInterval(){
 		let aspdFromTalent = this.isSiracusanPleasureEnabled ? 10 : 0;
-		return Math.round(
-			Math.round(
+		return roundTo(
+			roundTo(
 				this.atkInterval * 30
-				/ (Math.min(6, 1 + aspdFromTalent + this.aspdBuff)/100)
-			)/30
-		);
+				/ (Math.min(600, 100 + aspdFromTalent + this.aspdBuff)/100)
+			, 4)/30
+		, 4);
 	}
 
-	getFinalFocusedAtk(){
-		return ((this.attack * (1 + this.atkMult)) + this.inspirationBuff) * this.currentAtkScale;
-	}
-
-	getFinalAoEAtk(){
-		return this.attack * (1 + this.atkMult) * this.aoeDotAtkScale;
+	getFinalAtk(){
+		return Math.round((this.attack * (1 + this.atkMult)) + this.inspirationBuff);
 	}
 }

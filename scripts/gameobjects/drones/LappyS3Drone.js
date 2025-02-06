@@ -41,6 +41,7 @@ class LappyS3Drone extends Drone {
 
 		// AoE DoT
 		this.hasAoEDot = true;
+		this.aoeDotAtkScale = 1.2;
 		this.aoeDotRadius = 0.9;
 		this.DoTCooldown = 1.0;
 
@@ -91,6 +92,10 @@ class LappyS3Drone extends Drone {
 				continue;
 			}
 
+			if(!closestTarget){
+				return;
+			}
+
 			if(this.getDistanceFrom(target) < this.getDistanceFrom(closestTarget) && target.currHP > 0){
 				closestTarget = target;
 			}
@@ -135,8 +140,8 @@ class LappyS3Drone extends Drone {
 			}
 
 			target.currHP -= Math.round(Math.max(
-				this.owner.getFinalAoEAtk() * (1 - (this.lockedTarget.resistance/100)),
-				this.owner.getFinalAoEAtk() * 0.05
+				this.owner.getFinalAtk() * this.aoeDotAtkScale * (1 - (this.lockedTarget.resistance/100)),
+				this.owner.getFinalAtk() * this.aoeDotAtkScale * 0.05
 			));
 
 			if(this.lockedTarget.currHP <= 0){
@@ -153,11 +158,13 @@ class LappyS3Drone extends Drone {
 
 	attackFocused(){
 		// We gotta respect the attack interval in this house, good sir
-		if(this.prevAtkIntervalTick + this.owner.getFinalAtkInterval()*30 < akGame.tick){
+		if(this.prevAtkIntervalTick + secToFrames(this.owner.getFinalAtkInterval()) > akGame.tick){
 			return;
 		}
 
-		let finalDroneAtk = this.owner.getFinalFocusedAtk();
+		this.prevAtkIntervalTick = akGame.tick;
+
+		let finalDroneAtk = Math.round(this.owner.getFinalAtk() * this.currentAtkScale);
 		// The max() is used to account for the minimum damage dealt against targets with 95 RES or higher
 		let finalDamage = Math.max(
 			finalDroneAtk * (1 - (this.lockedTarget.resistance/100)),

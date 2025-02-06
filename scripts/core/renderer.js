@@ -12,7 +12,10 @@ class Renderer {
 	}
 
 	display(){
-		// Draw the Background first
+		this.ctx.canvas.width  = window.innerWidth;
+  		this.ctx.canvas.height = window.innerHeight;
+		  // Draw the Background first
+		this.ctx.font = "60px Arial";
 		this.ctx.fillStyle = "rgb(40,32,24)";
 		this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
 		let scaleFactor = this.canvas.width / akGame.tilesX;
@@ -42,6 +45,7 @@ class Renderer {
 
 		// Then the target dummies
 		let dummies = akGame.dummies;
+		this.ctx.fillStyle = "rgb(0,0,0)";
 		for(let dummy of dummies){
 			if(dummy.currHP > 0){
 				this.ctx.drawImage(img,
@@ -50,12 +54,22 @@ class Renderer {
 					(0.25 + dummy.x) * scaleFactor, (0.25 + dummy.y) * scaleFactor, // pos in canvas
 					0.5 * scaleFactor, 0.5 * scaleFactor // size in canvas
 				);
+				this.ctx.fillText(
+					dummy.currHP,
+					(0.25 + dummy.x) * scaleFactor,
+					(0.25 + dummy.y) * scaleFactor
+				);
 			}else{
 				this.ctx.drawImage(img,
 					279, 279, // src image pos
 					279, 279, // src image size
 					(0.25 + dummy.x) * scaleFactor, (0.25 + dummy.y) * scaleFactor, // pos in canvas
 					0.5 * scaleFactor, 0.5 * scaleFactor // size in canvas
+				);
+				this.ctx.fillText(
+					dummy.currHP,
+					(0.25 + dummy.x) * scaleFactor,
+					(0.25 + dummy.y) * scaleFactor
 				);
 			}
 		}

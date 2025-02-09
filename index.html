@@ -11,24 +11,79 @@
 <body>
 	<img id="sprites" src="images/sprites.png" class="hide" alt="sprites"/>
 	<div class="container">
-		<div class="header">
-			<h2>Arknights Global Range Simulator</h2>
-		</div>
 		<div class="menu">
-			<span id="instructions">You can move Lappland by clicking on the button then on a tile on the board</span>
-			<br />
-			<button id="placeLappland">Move Lappland</button>
-			<button id="addDummy">Add target</button>
-			<br />
-			<form>
-				<label for="maxHP">Max HP</label>
-				<input type="text" id="maxHP"/>
-				<br/>
-				<label for="res">RES</label>
-				<input type="text" id="res"/>
-				<br/>
-			</form>
+			<fieldset id="lappyManager">
+				<legend>Lappland</legend>
+				<label for="extraDrone">Extra drone?</label>
+				<input type="checkbox" id="extraDrone"/>
+				<br class="clear" />
+
+				<label for="lappyPosX">Position X</label>
+				<input type="range" min="0" step="1" max="14" id="lappyPosX"/>
+				<br class="clear" />
+
+				<label for="lappyPosY">Position Y</label>
+				<input type="range" min="0" step="1" max="8" id="lappyPosY"/>
+				<br class="clear" />
+
+				<label for="inspirationAtk">Flat ATK (inspiration)</label>
+				<input type="number" min="0" max="1000" id="inspirationAtk"/>
+				<br class="clear" />
+
+				<label for="atkMultBuffs">ATK % buffs</label>
+				<input type="number" min="0" max="2000" id="atkMultBuffs"/>
+				<br class="clear" />
+
+				<label for="aspdBuffs">ASPD buffs</label>
+				<input type="number" min="0" max="500" id="aspdBuffs"/>
+				<br class="clear" />
+			</fieldset>
 			<br/>
+			<div id="targetDummyManager">
+				<fieldset id="targetDummy1">
+					<legend>Target Dummy 1</legend>
+					<label for="maxHP">Max HP</label>
+					<input type="number" min="0" max="1000000" id="maxHP"/>
+					<br class="clear" />
+
+					<label for="res">Resistance</label>
+					<input type="number" min="0" max="95" id="res"/>
+					<br class="clear" />
+
+					<label for="posX1">Position X</label>
+					<input type="range" min="0" step="0.1" max="14" id="posX1"/>
+					<br class="clear" />
+
+					<label for="posY1">Position Y</label>
+					<input type="range" min="0" step="0.1" max="8" id="posY1"/>
+					<br class="clear"/>
+					<button id="deleteDummy1" class="delete">Delete</button>
+					<button id="deactivateDummy1">Deactivate</button>
+				</fieldset>
+				<br/>
+				<fieldset id="targetDummy1">
+					<legend>Target Dummy 1</legend>
+					<label for="maxHP">Max HP</label>
+					<input type="number" min="0" max="1000000" id="maxHP"/>
+					<br class="clear" />
+
+					<label for="res">Resistance</label>
+					<input type="number" min="0" max="95" id="res"/>
+					<br class="clear" />
+
+					<label for="posX1">Position X</label>
+					<input type="range" min="0" step="0.1" max="14" id="posX1"/>
+					<br class="clear" />
+
+					<label for="posY1">Position Y</label>
+					<input type="range" min="0" step="0.1" max="8" id="posY1"/>
+					<br class="clear"/>
+					<button id="deleteDummy1" class="delete">Delete</button>
+					<button id="deactivateDummy1">Deactivate</button>
+				</fieldset>
+			</div>
+			<br/>
+			<button id="addDummy">Add Dummy</button>
 			<button id="startSimulation">Start</button>
 			<button id="pauseSimulation" class="hide">Pause</button>
 			<button id="resetSimulation">Reset</button>
@@ -37,28 +92,34 @@
 		<div class="footer">
 			<table>
 				<tr>
-					<td>Expected focused DPS</td>
-					<td>6666</td>
+					<td>[1] Expected focused DPS</td>
+					<td id="expectedFocusedDps">6666</td>
+					<td class="rowExplanation">Sum of the theoratical single target DPS of all drones, assuming no initial warmup over 38.7s (skill duration - 1.3s initial delay)</td>
 				</tr>
 				<tr>
-					<td>Expected AoE DoT DPS</td>
-					<td>5555</td>
+					<td>[2] Expected AoE DoT DPS</td>
+					<td id="expectedAoeDoTDps">5555</td>
+					<td class="rowExplanation">Expected AoE DPS versus a single 1 target</td>
 				</tr>
 				<tr>
-					<td>Actual focused DPS</td>
-					<td>4444</td>
+					<td>[3] Actual focused DPS</td>
+					<td id="actualFocusedDps">4444</td>
+					<td class="rowExplanation">Actual damage done from drones focusing down a target</td>
 				</tr>
 				<tr>
-					<td>Actual AoE DoT DPS</td>
-					<td>3333</td>
+					<td>[4] Actual AoE DoT DPS</td>
+					<td id="actualAoEDoTDps">3333</td>
+					<td class="rowExplanation">Actual damage done from AoE DoT</td>
 				</tr>
 				<tr>
-					<td>Actual vs expected focused DPS (%)</td>
-					<td>2222</td>
+					<td>[5] Actual vs expected focused DPS (%)</td>
+					<td id="actualToExpectedFocusedDpsRatio">2222</td>
+					<td class="rowExplanation">[1] / [3] * 100</td>
 				</tr>
 				<tr>
-					<td>Actual vs expected AoE DoT DPS (%)</td>
-					<td>1111</td>
+					<td>[6] Actual vs expected AoE DoT DPS (%)</td>
+					<td id="actualToExpectedAoEDoTDpsRatio">1111</td>
+					<td class="rowExplanation">[2] / [4] * 100</td>
 				</tr>
 			</table>
 		</div>

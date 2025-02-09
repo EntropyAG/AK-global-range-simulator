@@ -49,10 +49,10 @@ class LappyS3Drone extends Drone {
 		this.initialDelay = 1.3;
 		this.initialVelocity = 0.1;
 		this.initialAcceleration = 1.9;
-		this.initialMaxSpeed = 2.0;
-		this.nominalAcceleration = 2.0;
-		this.nominalMaxSpeed = 4.0;
-		this.nominalTurnRate = Math.PI / 3;
+		this.initialMaxSpeed = 2.0; // Tiles/sec
+		this.nominalAcceleration = 2.0; // Per sec
+		this.nominalMaxSpeed = 4.0; // Tiles/sec
+		this.nominalTurnRate = Math.PI / 3; // Per frame
 		this.postKillSpeed = 1.0;
 		this.currentSpeed = this.initialVelocity;
 	}

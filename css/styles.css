@@ -11,19 +11,17 @@ button {
   height:40px;
 }
 
-#instructions {
-  border: 1px solid white;
-}
-
-#placeLappland {
-  background-color: #888;
+fieldset > button {
+  width: 90px;
+  height:35px;
 }
 
 #startSimulation {
   background-color: #55d;
 }
 
-#resetSimulation {
+#resetSimulation,
+.delete {
   background-color: #d55;
 }
 
@@ -33,6 +31,16 @@ button {
 
 .hide {
   display: none;
+}
+
+#targetDummyManager {
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.rowExplanation {
+  font-style: italic;
+  color: #999;
 }
 
 #container {
@@ -52,7 +60,6 @@ button {
 .container {
   display: grid;
   grid-template-areas:
-    "header header"
     "menu content"
     "footer footer";
   grid-template-columns: 1fr 3fr;
@@ -64,19 +71,42 @@ button {
   background-color: #444;
   padding: 5px;
 }
-.container > div.header {
-  grid-area: header;
-  text-align: center;
-}
+
 .container > div.menu {
   grid-area: menu;
 }
+
 .container > div.content {
   grid-area: content;
   height:800px;
 }
+
 .container > div.footer {
   grid-area: footer;
+}
+
+label,
+input,
+select,
+textarea {
+  display: block;
+  width: 150px;
+  float: left;
+  margin-bottom: 1em;
+}
+
+select {
+  width: 150px;
+}
+
+label {
+  text-align: right;
+  width: 100px;
+  padding-right: 2em;
+}
+
+.clear {
+  clear: both;
 }
 
 canvas, img {

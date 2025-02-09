@@ -19,74 +19,34 @@
 				<br class="clear" />
 
 				<label for="lappyPosX">Position X</label>
-				<input type="range" min="0" step="1" max="14" id="lappyPosX"/>
+				<input type="range" min="0" step="1" max="14" value="0" id="lappyPosX"/>
 				<br class="clear" />
 
 				<label for="lappyPosY">Position Y</label>
-				<input type="range" min="0" step="1" max="8" id="lappyPosY"/>
+				<input type="range" min="0" step="1" max="8" value="0" id="lappyPosY"/>
 				<br class="clear" />
 
 				<label for="inspirationAtk">Flat ATK (inspiration)</label>
-				<input type="number" min="0" max="1000" id="inspirationAtk"/>
+				<input type="number" min="0" max="1000" value="0" id="inspirationAtk"/>
 				<br class="clear" />
 
 				<label for="atkMultBuffs">ATK % buffs</label>
-				<input type="number" min="0" max="2000" id="atkMultBuffs"/>
+				<input type="number" min="0" max="2000" value="0" id="atkMultBuffs"/>
 				<br class="clear" />
 
 				<label for="aspdBuffs">ASPD buffs</label>
-				<input type="number" min="0" max="500" id="aspdBuffs"/>
+				<input type="number" min="0" max="500" value="0" id="aspdBuffs"/>
 				<br class="clear" />
 			</fieldset>
-			<br/>
-			<div id="targetDummyManager">
-				<fieldset id="targetDummy1">
-					<legend>Target Dummy 1</legend>
-					<label for="maxHP">Max HP</label>
-					<input type="number" min="0" max="1000000" id="maxHP"/>
-					<br class="clear" />
-
-					<label for="res">Resistance</label>
-					<input type="number" min="0" max="95" id="res"/>
-					<br class="clear" />
-
-					<label for="posX1">Position X</label>
-					<input type="range" min="0" step="0.1" max="14" id="posX1"/>
-					<br class="clear" />
-
-					<label for="posY1">Position Y</label>
-					<input type="range" min="0" step="0.1" max="8" id="posY1"/>
-					<br class="clear"/>
-					<button id="deleteDummy1" class="delete">Delete</button>
-					<button id="deactivateDummy1">Deactivate</button>
-				</fieldset>
-				<br/>
-				<fieldset id="targetDummy1">
-					<legend>Target Dummy 1</legend>
-					<label for="maxHP">Max HP</label>
-					<input type="number" min="0" max="1000000" id="maxHP"/>
-					<br class="clear" />
-
-					<label for="res">Resistance</label>
-					<input type="number" min="0" max="95" id="res"/>
-					<br class="clear" />
-
-					<label for="posX1">Position X</label>
-					<input type="range" min="0" step="0.1" max="14" id="posX1"/>
-					<br class="clear" />
-
-					<label for="posY1">Position Y</label>
-					<input type="range" min="0" step="0.1" max="8" id="posY1"/>
-					<br class="clear"/>
-					<button id="deleteDummy1" class="delete">Delete</button>
-					<button id="deactivateDummy1">Deactivate</button>
-				</fieldset>
-			</div>
 			<br/>
 			<button id="addDummy">Add Dummy</button>
 			<button id="startSimulation">Start</button>
 			<button id="pauseSimulation" class="hide">Pause</button>
 			<button id="resetSimulation">Reset</button>
+			<br/>
+			<div id="targetDummyManager">
+				<!-- Target dummy sections will be inserted here -->
+			</div>
 		</div>
 		<div class="content"><canvas id="game"></canvas></div>
 		<div class="footer">
@@ -149,10 +109,7 @@
 	<script type="text/javascript" src="scripts/core/game.js"></script>
 	<script type="text/javascript" src="scripts/core/ui.js"></script>
 	<script type="text/javascript">
-		akGame.lappland = new Lappland(1, 1);
-		akGame.dummies.push(new TargetDummy(7.2, 4.3, 10000, 20));
-		akGame.dummies.push(new TargetDummy(4.1, 4.2, 10000, 20));
-		akGame.dummies.push(new TargetDummy(2.2, 6, 10000, 20));
+		akGame.lappland = new Lappland(0, 0);
 		akRenderer.display();
 	</script>
 </body>

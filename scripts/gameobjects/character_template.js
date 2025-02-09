@@ -6,6 +6,7 @@ class Character extends GameObject {
 	resistance;
 	resIgnore;
 	atkMult;
+	atkMultBuff;
 	aspdBuff;
 	inspirationBuff; // Flat ATK buff, calculated after the atkMult
 

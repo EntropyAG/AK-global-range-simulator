@@ -13,6 +13,7 @@ class Lappland extends Character {
 		this.isSiracusanPleasureEnabled = true;
 		this.isS3Enabled = false;
 		this.atkMult = 0;
+		this.atkMultBuff = 0;
 		this.inspirationBuff = 0;
 		this.setPotential(0);
 		this.setAlphaWolf(0);
@@ -60,8 +61,10 @@ class Lappland extends Character {
 		 * we assume [0;PI*2[ clockwise
 		 * If there are 4, they each go in a primary cardinal direction, or 0, PI/2, PI and PI*3/4.
 		 * If there are 3, they go to PI*3/6, PI*7/6 and PI*11/6
+		 * TODO REACTIVATE
 		 */
 		let droneCount = this.getDroneCount();
+		//let droneCount = 1;
 		let startingAngle = droneCount === 4 ? 0 : Math.PI * 1/2;
 		let deltaAngle = 2 * Math.PI / droneCount;
 		for(let i=0; i<droneCount; i++){
@@ -92,6 +95,6 @@ class Lappland extends Character {
 	}
 
 	getFinalAtk(){
-		return Math.round((this.attack * (1 + this.atkMult)) + this.inspirationBuff);
+		return Math.round((this.attack * (1 + this.atkMult + this.atkMultBuff)) + this.inspirationBuff);
 	}
 }

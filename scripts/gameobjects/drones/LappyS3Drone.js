@@ -58,6 +58,8 @@ class LappyS3Drone extends Drone {
 	}
 
 	engageSeekNDestroyRoutine(){
+		this.attackAoE(akGame.dummies);
+
 		// Initial delay of 1.3s where no targets are being searched
 		if(akGame.tick < secToFrames(this.initialDelay)){
 			this.moveDirection(this.orientation, this.currentSpeed);
@@ -74,7 +76,6 @@ class LappyS3Drone extends Drone {
 		}
 
 		this.chase(this.lockedTarget);
-		this.attackAoE(akGame.dummies);
 	}
 
 	// Look for the closest possible target then set it as current target, if it exists
@@ -134,6 +135,8 @@ class LappyS3Drone extends Drone {
 			// Only hitting enemies within range, that are alive, that haven't been hit by the DoT less than 1 sec ago
 			if(this.getDistanceFrom(target) > this.aoeDotRadius
 					|| target.currHP <= 0
+					|| target.deleted === true
+					|| target.activated === false
 					|| Math.round(target.hitByAoEDoTFrame + secToFrames(this.DoTCooldown)) > akGame.tick
 				){
 				continue;

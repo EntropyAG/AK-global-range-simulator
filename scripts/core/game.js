@@ -6,6 +6,7 @@ class Game {
 	lappland;
 	drones = [];
 	dummies = [];
+	dummyMaxIndex = 0;
 	logs = [];
 	dpsMetrics = {
 		"time": 0,
@@ -42,6 +43,7 @@ class Game {
 		document.getElementById("startSimulation").classList.remove("hide");
 		document.getElementById("pauseSimulation").classList.add("hide");
 		akRenderer.display(self);
+		setFieldsetsInteractable(true);
 	}
 
 	pauseSimulation(){
@@ -49,6 +51,7 @@ class Game {
 	}
 
 	startSimulation(){
+		setFieldsetsInteractable(false);
 		let self = this;
 		document.getElementById("startSimulation").classList.add("hide");
 		document.getElementById("pauseSimulation").classList.remove("hide");
@@ -91,6 +94,7 @@ class Game {
 
 	endSimulation(){
 		this.isPaused = true;
+		setFieldsetsInteractable(true);
 	}
 
 	addCombatLog(str){

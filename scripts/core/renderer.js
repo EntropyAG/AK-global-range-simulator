@@ -12,9 +12,11 @@ class Renderer {
 	}
 
 	display(){
+		// Fix for resolution issues, otherwise things are super pixelated
 		this.ctx.canvas.width  = window.innerWidth;
   		this.ctx.canvas.height = window.innerHeight;
-		  // Draw the Background first
+
+		// Draw the Background first
 		this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
 		let scaleFactor = this.canvas.width / akGame.tilesX;
 		this.canvas.height = akGame.tilesY * scaleFactor;

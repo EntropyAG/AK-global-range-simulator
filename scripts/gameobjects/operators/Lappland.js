@@ -55,7 +55,7 @@ class Lappland extends Character {
 	activateS3(){
 		let self = this;
 		this.isS3Enabled = true;
-		this.atkMult += 0.8;
+		this.atkMult = 0.8;
 		/**
 		 * On skill activation, drones are summoned depending on how many there are. For the angles stated below,
 		 * we assume [0;PI*2[ clockwise
@@ -86,10 +86,11 @@ class Lappland extends Character {
 		let aspdFromTalent = this.isSiracusanPleasureEnabled ? 10 : 0;
 		return roundTo(
 			roundTo(
-				this.atkInterval * 30
-				/ (Math.min(600, 100 + aspdFromTalent + this.aspdBuff)/100)
-			, 4)/30
-		, 4);
+				this.atkInterval/(Math.min(100 + aspdFromTalent + this.aspdBuff, 600)/100)*akGame.fps)/akGame.fps,
+				4
+		);
+
+		
 	}
 
 	getFinalAtk(){

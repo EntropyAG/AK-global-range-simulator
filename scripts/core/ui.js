@@ -80,8 +80,6 @@ document.getElementById("resetSimulation").addEventListener("click", (e) => {
  *	</fieldset>
  */
 let addNewTargetDummySection = function(){
-    // We need to retrieve the last index of the dummies and increment,
-    // otherwise the listeners won't be added correctly
     let index = akGame.dummies.length;
 
     // Fieldset
@@ -221,4 +219,10 @@ let addBehaviorToDummyUi = function(index){
  */
 let setFieldsetsInteractable = function(isEnabled){
     [].slice.call(document.getElementsByTagName("fieldset")).forEach(e => e.disabled = !isEnabled);
+};
+
+let updateDisplayedMetrics = function(metrics){
+    Object.keys(akGame.dpsMetrics).forEach(function(key){
+        document.getElementById(key).innerText = Math.round(akGame.dpsMetrics[key]);
+    });
 };

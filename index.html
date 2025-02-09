@@ -15,7 +15,7 @@
 			<fieldset id="lappyManager">
 				<legend>Lappland</legend>
 				<label for="extraDrone">Extra drone?</label>
-				<input type="checkbox" id="extraDrone"/>
+				<input type="checkbox" id="extraDrone" checked/>
 				<br class="clear" />
 
 				<label for="lappyPosX">Position X</label>
@@ -53,38 +53,58 @@
 		<div class="footer">
 			<table>
 				<tr>
-					<td>[0] Time (seconds)</td>
-					<td id="expectedFocusedDps">6666</td>
+					<td>Time (seconds)</td>
+					<td id="time">0</td>
 					<td class="rowExplanation">Time from skill activation until all enemies are dead</td>
 				</tr>
 				<tr>
-					<td>[1] Expected focused DPS</td>
-					<td id="expectedFocusedDps">6666</td>
-					<td class="rowExplanation">Sum of the theoratical single target DPS of all drones, assuming no initial warmup over 38.7s (skill duration - 1.3s initial delay)</td>
+					<td>Expected focused DPS</td>
+					<td id="expectedDpsFocused">0</td>
+					<td class="rowExplanation">Weighted DPS based on time of various phases [PRE focused DPS * warmupTime + PST focused DPS * PST duration) / Skill duration]</td>
 				</tr>
 				<tr>
-					<td>[2] Expected AoE DoT DPS</td>
-					<td id="expectedAoeDoTDps">5555</td>
-					<td class="rowExplanation">Expected AoE DPS versus a single 1 target</td>
+					<td>Expected AoE DoT DPS</td>
+					<td id="expectedDpsAoEDoT">0</td>
+					<td class="rowExplanation">Expected AoE DPS versus a single 1 target [final Atk * 1.2]</td>
 				</tr>
 				<tr>
-					<td>[3] Actual focused DPS</td>
-					<td id="actualFocusedDps">4444</td>
+					<td>Expected total DPS</td>
+					<td id="expectedDpsBoth">0</td>
+					<td class="rowExplanation">[Expected focused DPS + Expected AoE DoT DPS]</td>
+				</tr>
+				<tr>
+					<td>Expected total damage focused</td>
+					<td id="expectedTotalDmgFocused">0</td>
+					<td class="rowExplanation">[Expected focused DPS * Skill duration]</td>
+				</tr>
+				<tr>
+					<td>Expected total damage AoE DoT</td>
+					<td id="expectedTotalDmgAoEDoT">0</td>
+					<td class="rowExplanation">[Expected AoE DoT DPS * Skill duration]</td>
+				</tr>
+				<tr>
+					<td>Expected total damage (both)</td>
+					<td id="expectedTotalDmgBoth">0</td>
+					<td class="rowExplanation">[Expected focused total damage + Expected AoE DoT total damage]</td>
+				</tr>
+				<tr>
+					<td>Actual focused DPS</td>
+					<td id="actualDpsFocused">0</td>
 					<td class="rowExplanation">Actual damage done from drones focusing down a target</td>
 				</tr>
 				<tr>
-					<td>[4] Actual AoE DoT DPS</td>
-					<td id="actualAoEDoTDps">3333</td>
+					<td>Actual AoE DoT DPS</td>
+					<td id="actualDpsAoEDoT">0</td>
 					<td class="rowExplanation">Actual damage done from AoE DoT</td>
 				</tr>
 				<tr>
-					<td>[5] Actual vs expected focused DPS (%)</td>
-					<td id="actualToExpectedFocusedDpsRatio">2222</td>
+					<td>Actual vs expected focused DPS (%)</td>
+					<td id="actualVsExpectedFocusedDpsRatio">0</td>
 					<td class="rowExplanation">[1] / [3] * 100</td>
 				</tr>
 				<tr>
-					<td>[6] Actual vs expected AoE DoT DPS (%)</td>
-					<td id="actualToExpectedAoEDoTDpsRatio">1111</td>
+					<td>Actual vs expected AoE DoT DPS (%)</td>
+					<td id="actualVsExpectedAoEDoTDpsRatio">0</td>
 					<td class="rowExplanation">[2] / [4] * 100</td>
 				</tr>
 			</table>

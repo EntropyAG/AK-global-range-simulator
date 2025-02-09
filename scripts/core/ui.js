@@ -180,6 +180,7 @@ let addBehaviorToDummyUi = function(index){
 
     document.getElementById("res"+index).addEventListener("input", (e) => {
         akGame.dummies[index].resistance = parseInt(e.target.value);
+        akRenderer.display();
     });
 
     document.getElementById("posX"+index).addEventListener("input", (e) => {
@@ -193,7 +194,7 @@ let addBehaviorToDummyUi = function(index){
     });
 
     document.getElementById("deleteDummy"+index).addEventListener("click", (e) => {
-        akGame.dummies[index].deleted = true;
+        akGame.dummies[index].activated = false;
         akRenderer.display();
         document.getElementById("targetDummy"+index).remove();
     });

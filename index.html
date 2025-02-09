@@ -44,6 +44,7 @@
 			<button id="pauseSimulation" class="hide">Pause</button>
 			<button id="resetSimulation">Reset</button>
 			<br/>
+			<br/>
 			<div id="targetDummyManager">
 				<!-- Target dummy sections will be inserted here -->
 			</div>
@@ -51,6 +52,11 @@
 		<div class="content"><canvas id="game"></canvas></div>
 		<div class="footer">
 			<table>
+				<tr>
+					<td>[0] Time (seconds)</td>
+					<td id="expectedFocusedDps">6666</td>
+					<td class="rowExplanation">Time from skill activation until all enemies are dead</td>
+				</tr>
 				<tr>
 					<td>[1] Expected focused DPS</td>
 					<td id="expectedFocusedDps">6666</td>

@@ -14,8 +14,8 @@ class Game {
 		"expectedAoEDoT": 0,
 		"actualFocused": 0,
 		"actualAoEDoT": 0,
-		"actualVsExpectedFocused%": 0,
-		"actualVsExpectedAoEDoT%": 0
+		"actualVsExpectedFocusedRatio": 0,
+		"actualVsExpectedAoEDoTRatio": 0
 	};
 	tilesX; // Number of tiles in the X axis
 	tilesY; // Number of tiles in the Y axis

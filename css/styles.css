@@ -16,6 +16,11 @@ fieldset > button {
   height:35px;
 }
 
+fieldset[disabled] > button {
+  background-color: #666;
+  color: #333;
+}
+
 #startSimulation {
   background-color: #55d;
 }

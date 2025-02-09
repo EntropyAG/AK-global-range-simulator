@@ -53,7 +53,7 @@ class Renderer {
 		}
 
 		// Then the target dummies
-		let dummies = akGame.dummies.filter(e => e.deleted === false && e.activated === true);
+		let dummies = akGame.dummies.filter(e => e.activated === true);
 		this.ctx.fillStyle = "rgb(0,0,0)";
 		for(let dummy of dummies){
 			this.ctx.drawImage(img,

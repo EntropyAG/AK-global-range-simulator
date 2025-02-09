@@ -16,7 +16,7 @@ class Lappland extends Character {
 		this.atkMultBuff = 0;
 		this.inspirationBuff = 0;
 		this.setPotential(0);
-		this.setAlphaWolf(0);
+		this.setAlphaWolf(2);
 	}
 
 	/**

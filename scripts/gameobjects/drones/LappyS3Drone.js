@@ -58,6 +58,14 @@ class LappyS3Drone extends Drone {
 	}
 
 	engageSeekNDestroyRoutine(){
+		// We were locked into a target who died, respawn near it
+		if(this.lockedTarget && this.lockedTarget.currHP <= 0){
+			// Respawn in a square of size 1.5 tiles centered on the target
+			this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
+			this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;
+			this.currentSpeed = this.postKillSpeed;
+			this.currentAtkScale = this.startingAtkScale;
+		}
 		this.attackAoE(akGame.dummies);
 
 		// Initial delay of 1.3s where no targets are being searched
@@ -88,13 +96,13 @@ class LappyS3Drone extends Drone {
 		// Otherwise look for one
 		let closestTarget;
 		for(let target of targets){
-			if(!closestTarget && target.currHP > 0){
+			let targetIsValid = target.currHP > 0 && target.activated === true;
+			if(targetIsValid && !closestTarget){
 				closestTarget = target;
-				continue;
 			}
 
-			if(!closestTarget){
-				return;
+			if(target === closestTarget || !closestTarget){
+				continue;
 			}
 
 			if(this.getDistanceFrom(target) < this.getDistanceFrom(closestTarget) && target.currHP > 0){
@@ -135,7 +143,6 @@ class LappyS3Drone extends Drone {
 			// Only hitting enemies within range, that are alive, that haven't been hit by the DoT less than 1 sec ago
 			if(this.getDistanceFrom(target) > this.aoeDotRadius
 					|| target.currHP <= 0
-					|| target.deleted === true
 					|| target.activated === false
 					|| Math.round(target.hitByAoEDoTFrame + secToFrames(this.DoTCooldown)) > akGame.tick
 				){
@@ -143,11 +150,11 @@ class LappyS3Drone extends Drone {
 			}
 
 			target.currHP -= Math.round(Math.max(
-				this.owner.getFinalAtk() * this.aoeDotAtkScale * (1 - (this.lockedTarget.resistance/100)),
+				this.owner.getFinalAtk() * this.aoeDotAtkScale * (1 - (target.resistance/100)),
 				this.owner.getFinalAtk() * this.aoeDotAtkScale * 0.05
 			));
 
-			if(this.lockedTarget.currHP <= 0){
+			if(target.currHP <= 0){
 				akGame.addCombatLog("Target dummy "+target.id+" has been killed by an AoE ATK");
 			}else{
 				akGame.addCombatLog("Target dummy "+target.id+"'s HP is now "
@@ -178,11 +185,6 @@ class LappyS3Drone extends Drone {
 
 		if(this.lockedTarget.currHP <= 0){
 			akGame.addCombatLog("Target dummy "+this.lockedTarget.id+"has been killed by a focused ATK");
-			// The drone is respawned randomly in a 1.5 square centered on the target
-			this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
-			this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;
-			this.currentSpeed = this.postKillSpeed;
-			this.currentAtkScale = this.startingAtkScale;
 		}else{
 			akGame.addCombatLog("Target dummy "+this.lockedTarget.id+"'s HP is now "
 				+this.lockedTarget.currHP+"/"+this.lockedTarget.maxHP+ " following a focused attack"

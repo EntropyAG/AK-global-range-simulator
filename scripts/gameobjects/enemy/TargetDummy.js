@@ -11,7 +11,6 @@ class TargetDummy extends Character {
 		this.maxHP = hitpoints;
 		this.currHP = hitpoints;
 		this.resistance = res;
-		this.deleted = false;
 		this.activated = true;
 	}
 }

@@ -18,19 +18,6 @@ class GameObject {
 	}
 
 	// ############### Positioning ###############
-	setPos(x, y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	getPos() {
-		return { x: this.x, y: this.y };
-	}
-
-	teleportTo(x, y) {
-		this.x = x;
-		this.y = y;
-	}
 
 	// Distance between A and B is sqrt[(Bx - Ax)² + (By - Ay)²]
 	getDistanceFrom(obj) {

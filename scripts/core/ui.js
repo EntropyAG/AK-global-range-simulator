@@ -1,6 +1,7 @@
 /**
  * The following listeners are executed on script load, since they apply to
  * elements that are not removed/added
+ * TODO: Add drag n' drop instead of range inputs for positions
  */
 
 // Lappland section

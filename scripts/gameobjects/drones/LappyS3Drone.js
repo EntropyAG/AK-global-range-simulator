@@ -61,6 +61,7 @@ class LappyS3Drone extends Drone {
 		// We were locked into a target who died, respawn near it
 		if(this.lockedTarget && this.lockedTarget.currHP <= 0){
 			// Respawn in a square of size 1.5 tiles centered on the target
+			// TODO: Strange wolf displacement after target dies? Check frame by frame
 			this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
 			this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;
 			this.currentSpeed = this.postKillSpeed;
@@ -69,6 +70,7 @@ class LappyS3Drone extends Drone {
 		this.attackAoE(akGame.dummies);
 
 		// Initial delay of 1.3s where no targets are being searched
+		// TODO: Investigate why the wolves apparently go further than what they are supposed to
 		if(akGame.tick < secToFrames(this.initialDelay)){
 			this.moveDirection(this.orientation, this.currentSpeed);
 			this.currentSpeed = Math.min(
@@ -183,6 +185,7 @@ class LappyS3Drone extends Drone {
 
 		this.lockedTarget.currHP -= Math.round(finalDamage);
 
+		// TODO: Rework logging to take into account live metrics
 		if(this.lockedTarget.currHP <= 0){
 			akGame.addCombatLog("Target dummy "+this.lockedTarget.id+"has been killed by a focused ATK");
 		}else{

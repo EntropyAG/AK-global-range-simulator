@@ -57,7 +57,7 @@ class Renderer {
 		this.ctx.fillStyle = "rgb(0,0,0)";
 		for(let dummy of dummies){
 			this.ctx.drawImage(img,
-				279, dummy.currHP > 0 ? 0 : 279, // src image pos
+				279, dummy.currHP > 0 ? 0 : 279, // src image pos, ternary to pick between 2 different sprites
 				279, 279, // src image size
 				(0.25 + dummy.x) * scaleFactor, (0.25 + dummy.y) * scaleFactor, // pos in canvas
 				0.5 * scaleFactor, 0.5 * scaleFactor // size in canvas

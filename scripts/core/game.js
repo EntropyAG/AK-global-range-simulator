@@ -8,6 +8,8 @@ class Game {
 	dummies = [];
 	dummyMaxIndex = 0;
 	logs = [];
+	focusedDamageInstances = [];
+	aoeDotDamageInstances = [];
 	dpsMetrics = {
 		"time": 0,
 		"expectedTotalDmgFocused": 0,
@@ -19,7 +21,11 @@ class Game {
 		"actualDpsFocused": 0,
 		"actualDpsAoEDoT": 0,
 		"actualVsExpectedFocusedDpsRatio": 0,
-		"actualVsExpectedAoEDoTDpsRatio": 0
+		"actualVsExpectedAoEDoTDpsRatio": 0,
+		"actualDmgFocusedTotal": 0,
+		"actualDmgAoEDoTTotal": 0,
+		"actualDmgBothTotal": 0,
+		"actualVsExpectedTotalDmgRatio": 0
 	};
 	tilesX; // Number of tiles in the X axis
 	tilesY; // Number of tiles in the Y axis
@@ -39,6 +45,7 @@ class Game {
 		this.drones = [];
 		for(let dummy of this.dummies){
 			dummy.currHP = dummy.maxHP;
+			dummy.hitByAoEDoTFrame = -999;
 		}
 		this.resetCombatLog();
 		if(this.interval){
@@ -69,6 +76,7 @@ class Game {
 				return;
 			}
 
+			self.calculateActualDps();
 			updateDisplayedMetrics();
 
 			// Check if there are remaining targets
@@ -81,9 +89,10 @@ class Game {
 			}
 
 			// If enemies are dead or the skill expires, we forcefully end the simulation
-			if(!atLeast1DummyAlive || this.tick >= secToFrames(40)){
+			if(!atLeast1DummyAlive || self.tick >= secToFrames(40)){
 				self.endSimulation();
-				console.log("No remaining targets, ending simulation");
+				console.log("No remaining targets or skill expired, ending simulation");
+				return;
 			}
 
 			// Otherwise, it's time for the HUUUUUUUNT
@@ -94,6 +103,7 @@ class Game {
 			// Ok we done for this game tick, go to the next tick
 			akRenderer.display();
 			akGame.tick++;
+			self.dpsMetrics.time = framesToSec(self.tick);
 
 		}, 1000 / this.fps);
 	}
@@ -103,13 +113,36 @@ class Game {
 		setFieldsetsInteractable(true);
 	}
 
-	addCombatLog(str){
-		this.logs.push(str);
-		console.log("Frame "+this.tick+" received: "+str);
-	}
-
 	resetCombatLog(){
 		this.logs = [];
+		this.focusedDamageInstances = [];
+		this.aoeDotDamageInstances = [];
+	}
+
+	calculateActualDps(){
+		if(this.dpsMetrics.time === 0){
+			return;
+		}
+
+		let sumFocused = this.focusedDamageInstances.reduce(function (x, y) {
+			return x + y;
+		}, 0);
+		let sumAoeDot = this.aoeDotDamageInstances.reduce(function (x, y) {
+			return x + y;
+		}, 0);
+
+		this.dpsMetrics.actualDmgFocusedTotal = sumFocused;
+		this.dpsMetrics.actualDmgAoEDoTTotal = sumAoeDot;
+		this.dpsMetrics.actualDmgBothTotal = sumFocused + sumAoeDot;
+
+		this.dpsMetrics.actualDpsFocused = sumFocused / this.dpsMetrics.time;
+		this.dpsMetrics.actualDpsAoEDoT = sumAoeDot / this.dpsMetrics.time;
+		this.dpsMetrics.actualVsExpectedFocusedDpsRatio =
+			this.dpsMetrics.actualDpsFocused / this.dpsMetrics.expectedDpsFocused * 100;
+		this.dpsMetrics.actualVsExpectedAoEDoTDpsRatio =
+			this.dpsMetrics.actualDpsAoEDoT / this.dpsMetrics.expectedDpsAoEDoT * 100;
+		this.dpsMetrics.actualVsExpectedTotalDmgRatio =
+			(sumFocused + sumAoeDot) / this.dpsMetrics.expectedTotalDmgBoth * 100;
 	}
 
 	/**

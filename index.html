@@ -100,12 +100,32 @@
 				<tr>
 					<td>Actual vs expected focused DPS (%)</td>
 					<td id="actualVsExpectedFocusedDpsRatio">0</td>
-					<td class="rowExplanation">[1] / [3] * 100</td>
+					<td class="rowExplanation">[Actual focused DPS / Expected focused DPS] * 100</td>
 				</tr>
 				<tr>
 					<td>Actual vs expected AoE DoT DPS (%)</td>
 					<td id="actualVsExpectedAoEDoTDpsRatio">0</td>
-					<td class="rowExplanation">[2] / [4] * 100</td>
+					<td class="rowExplanation">[Actual AoE DoT DPS / Expected AoE DoT DPS] * 100</td>
+				</tr>
+				<tr>
+					<td>Actual focused total damage</td>
+					<td id="actualDmgFocusedTotal">0</td>
+					<td class="rowExplanation">Sum of damage instances from focused attacks</td>
+				</tr>
+				<tr>
+					<td>Actual AoE DoT total damage</td>
+					<td id="actualDmgAoEDoTTotal">0</td>
+					<td class="rowExplanation">Sum of damage instances from AoE DoT attacks</td>
+				</tr>
+				<tr>
+					<td>Actual total damage (both)</td>
+					<td id="actualDmgBothTotal">0</td>
+					<td class="rowExplanation">[Actual focused total damage + Actual AoE DoT total damage]</td>
+				</tr>
+				<tr>
+					<td>Actual vs expected total damage (%)</td>
+					<td id="actualVsExpectedTotalDmgRatio">0</td>
+					<td class="rowExplanation">[Actual total damage (both) / Expected total damage (both)] * 100</td>
 				</tr>
 			</table>
 		</div>

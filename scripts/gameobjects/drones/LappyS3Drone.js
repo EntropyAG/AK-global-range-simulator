@@ -151,19 +151,15 @@ class LappyS3Drone extends Drone {
 				continue;
 			}
 
-			target.currHP -= Math.round(Math.max(
+			let finalDamage = Math.round(Math.max(
 				this.owner.getFinalAtk() * this.aoeDotAtkScale * (1 - (target.resistance/100)),
 				this.owner.getFinalAtk() * this.aoeDotAtkScale * 0.05
 			));
 
-			if(target.currHP <= 0){
-				akGame.addCombatLog("Target dummy "+target.id+" has been killed by an AoE ATK");
-			}else{
-				akGame.addCombatLog("Target dummy "+target.id+"'s HP is now "
-					+ target.currHP + "/" + target.maxHP+ " following an AoE DoT"
-				);
-			}
+			target.currHP -= finalDamage;
 
+			let finalRecordedDmg = target.currHP < 0 ? finalDamage + target.currHP : finalDamage;
+			akGame.aoeDotDamageInstances.push(finalRecordedDmg);
 			target.hitByAoEDoTFrame = akGame.tick;
 		}
 	}
@@ -178,20 +174,17 @@ class LappyS3Drone extends Drone {
 
 		let finalDroneAtk = Math.round(this.owner.getFinalAtk() * this.currentAtkScale);
 		// The max() is used to account for the minimum damage dealt against targets with 95 RES or higher
-		let finalDamage = Math.max(
+		let finalDamage = Math.round(Math.max(
 			finalDroneAtk * (1 - (this.lockedTarget.resistance/100)),
 			finalDroneAtk * 0.05
-		);
+		));
 
-		this.lockedTarget.currHP -= Math.round(finalDamage);
+		this.lockedTarget.currHP -= finalDamage;
 
-		// TODO: Rework logging to take into account live metrics
-		if(this.lockedTarget.currHP <= 0){
-			akGame.addCombatLog("Target dummy "+this.lockedTarget.id+"has been killed by a focused ATK");
-		}else{
-			akGame.addCombatLog("Target dummy "+this.lockedTarget.id+"'s HP is now "
-				+this.lockedTarget.currHP+"/"+this.lockedTarget.maxHP+ " following a focused attack"
-			);
+		let finalRecordedDmg = this.lockedTarget.currHP < 0 ? finalDamage + this.lockedTarget.currHP : finalDamage;
+		akGame.focusedDamageInstances.push(finalRecordedDmg);
+
+		if(this.lockedTarget.currHP > 0){
 			// On every attack, add the delta attack scale to the current scale to empower the next attacks
 			this.currentAtkScale = Math.min(this.currentAtkScale + this.deltaAtkScale, this.endingAtkScale);
 		}

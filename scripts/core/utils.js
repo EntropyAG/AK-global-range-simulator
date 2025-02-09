@@ -7,7 +7,11 @@ let msToFrames = function(ms){
 };
 
 let framesToMs = function(frameCount){
-    return frameCount * 1000 / akGame.fps;
+    return frameCount * 1000 / (1000 / akGame.fps);
+};
+
+let framesToSec = function(frameCount){
+    return framesToMs(frameCount) / 1000;
 };
 
 let tilesPerSecToTilesPerFrame = function(tps){

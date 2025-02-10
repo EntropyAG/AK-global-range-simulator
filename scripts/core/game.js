@@ -67,6 +67,9 @@ class Game {
 		document.getElementById("startSimulation").classList.add("hide");
 		document.getElementById("pauseSimulation").classList.remove("hide");
 		this.isPaused = false;
+		this.lappland.atkMultBuff = parseInt(document.getElementById("atkMultBuffs").value);
+		this.lappland.inspirationBuff = parseInt(document.getElementById("inspirationAtk").value);
+		this.lappland.aspdBuff = parseInt(document.getElementById("aspdBuffs").value);
 		this.lappland.activateS3();
 
 		self.calculateExpectedDps();

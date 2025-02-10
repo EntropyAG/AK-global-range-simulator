@@ -77,9 +77,10 @@ document.getElementById("resetSimulation").addEventListener("click", (e) => {
  *		<br class="clear"/>
  *		<button id="deleteDummy1" class="delete">Delete</button>
  *		<button id="deactivateDummy1">Deactivate</button>
+ *		<button id="duplicateDummy1">Duplicate</button>
  *	</fieldset>
  */
-let addNewTargetDummySection = function(){
+let addNewTargetDummySection = function(dummy){
     let index = akGame.dummies.length;
 
     // Fieldset
@@ -103,7 +104,7 @@ let addNewTargetDummySection = function(){
     maxHP.min = 1;
     maxHP.max = 1000000;
     maxHP.id = "maxHP"+index;
-    maxHP.value = 10000;
+    maxHP.value = dummy ? dummy.maxHP : 10000;
 
     // Res
     let resLabel = document.createElement("label");
@@ -114,7 +115,7 @@ let addNewTargetDummySection = function(){
     res.min = 0;
     res.max = 95;
     res.id = "res"+index;
-    res.value = 0;
+    res.value = dummy ? dummy.resistance : 0;
 
     // Pos X
     let posXLabel = document.createElement("label");
@@ -126,7 +127,7 @@ let addNewTargetDummySection = function(){
     posX.step = 0.1;
     posX.max = 14;
     posX.id = "posX"+index;
-    posX.value = 5;
+    posX.value = dummy ? dummy.x : 5;
 
     // Pos Y
     let posYLabel = document.createElement("label");
@@ -138,7 +139,7 @@ let addNewTargetDummySection = function(){
     posY.step = 0.1;
     posY.max = 8;
     posY.id = "posY"+index;
-    posY.value = 5;
+    posY.value = dummy ? dummy.y : 5;
 
     // Buttons
     let deleteDummy = document.createElement("button");
@@ -155,10 +156,14 @@ let addNewTargetDummySection = function(){
     reactivateDummy.innerText = "Reactivate";
     reactivateDummy.classList.add("hide");
 
+    let duplicateDummy = document.createElement("button");
+    duplicateDummy.id = "duplicateDummy"+index;
+    duplicateDummy.innerText = "Duplicate";
+
     // Building the tree itself
     [
         legend, maxHPLabel, maxHP, br, resLabel, res, br, posXLabel, posX, br,
-        posYLabel, posY, br, deleteDummy, deactivateDummy, reactivateDummy
+        posYLabel, posY, br, deleteDummy, deactivateDummy, reactivateDummy, duplicateDummy
     ].forEach(function(element){
         fieldset.appendChild(element);
     });
@@ -209,6 +214,19 @@ let addBehaviorToDummyUi = function(index){
         akGame.dummies[index].activated = true;
         e.target.classList.add("hide");
         document.getElementById("deactivateDummy"+index).classList.remove("hide");
+        akRenderer.display();
+    });
+
+    document.getElementById("duplicateDummy"+index).addEventListener("click", (e) => {
+        let dummyToDuplicate = akGame.dummies[index];
+        let newDummy = new TargetDummy(5, 5, 10000, 0);
+        newDummy.x = dummyToDuplicate.x;
+        newDummy.y = dummyToDuplicate.y;
+        newDummy.currHP = dummyToDuplicate.currHP;
+        newDummy.maxHP = dummyToDuplicate.maxHP;
+        newDummy.resistance = dummyToDuplicate.resistance;
+        addNewTargetDummySection(newDummy);
+        akGame.dummies.push(newDummy);
         akRenderer.display();
     });
 };

@@ -14,6 +14,7 @@ class Lappland extends Character {
 		this.isS3Enabled = false;
 		this.atkMult = 0;
 		this.atkMultBuff = 0;
+		this.aspdBuff = 0;
 		this.inspirationBuff = 0;
 		this.setPotential(0);
 		this.setAlphaWolf(2);
@@ -89,11 +90,9 @@ class Lappland extends Character {
 				this.atkInterval/(Math.min(100 + aspdFromTalent + this.aspdBuff, 600)/100)*akGame.fps)/akGame.fps,
 				4
 		);
-
-		
 	}
 
 	getFinalAtk(){
-		return Math.round((this.attack * (1 + this.atkMult + this.atkMultBuff)) + this.inspirationBuff);
+		return Math.round((this.attack * (1 + this.atkMult + this.atkMultBuff / 100)) + this.inspirationBuff);
 	}
 }

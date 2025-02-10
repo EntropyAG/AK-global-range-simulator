@@ -63,10 +63,10 @@ class LappyS3Drone extends Drone {
 
 		// Initial delay of 1.3s where no targets are being searched
 		if(akGame.tick < secToFrames(this.initialDelay)){
-			this.moveDirection(this.orientation, this.currentSpeed);
+			this.moveDirection(this.orientation, tilesPerSecToTilesPerFrame(this.currentSpeed));
 			this.currentSpeed = Math.min(
-				tilesPerSecToTilesPerFrame(this.initialMaxSpeed),
-				tilesPerSecToTilesPerFrame(this.currentSpeed + this.initialAcceleration)
+				this.initialMaxSpeed,
+				this.currentSpeed + tilesPerSecToTilesPerFrame(this.initialAcceleration)
 			);
 			return;
 		}
@@ -128,16 +128,15 @@ class LappyS3Drone extends Drone {
 		let relativeAngleDiff = this.orientation - angleToTarget;
 		if(Math.abs(relativeAngleDiff) <= this.nominalTurnRate){
 			this.setOrientation(angleToTarget);
-		}else if(relativeAngleDiff < 0){
+		}else if(relativeAngleDiff > Math.PI){
 			this.setOrientation(this.orientation + this.nominalTurnRate);
-		}else if(relativeAngleDiff > 0){
+		}else{
 			this.setOrientation(this.orientation - this.nominalTurnRate);
 		}
-
-		this.moveDirection(this.orientation, this.currentSpeed);
+		this.moveDirection(this.orientation, tilesPerSecToTilesPerFrame(this.currentSpeed));
 		this.currentSpeed = Math.min(
-			tilesPerSecToTilesPerFrame(this.nominalMaxSpeed),
-			tilesPerSecToTilesPerFrame(this.currentSpeed + this.initialAcceleration)
+			this.nominalMaxSpeed,
+			this.currentSpeed + tilesPerSecToTilesPerFrame(this.nominalAcceleration)
 		);
 	}
 

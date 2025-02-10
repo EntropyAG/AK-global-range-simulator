@@ -6,10 +6,6 @@
 
 // Lappland section
 
-document.getElementById("extraDrone").addEventListener("click", (e) => {
-    akGame.lappland.setAlphaWolf(e.target.checked ? 2 : 1);
-});
-
 document.getElementById("lappyPosX").addEventListener("input", (e) => {
     akGame.lappland.x = parseInt(e.target.value);
     akRenderer.display();
@@ -18,18 +14,6 @@ document.getElementById("lappyPosX").addEventListener("input", (e) => {
 document.getElementById("lappyPosY").addEventListener("input", (e) => {
     akGame.lappland.y = parseInt(e.target.value);
     akRenderer.display();
-});
-
-document.getElementById("inspirationAtk").addEventListener("input", (e) => {
-    akGame.lappland.inspirationBuff = e.target.value;
-});
-
-document.getElementById("atkMultBuffs").addEventListener("input", (e) => {
-    akGame.lappland.atkMultBuff = e.target.value;
-});
-
-document.getElementById("aspdBuffs").addEventListener("input", (e) => {
-    akGame.lappland.aspdBuff = e.target.value;
 });
 
 // Target dummies
@@ -169,12 +153,16 @@ let addNewTargetDummySection = function(dummy){
     });
     let manager = document.getElementById("targetDummyManager");
     manager.appendChild(fieldset);
-    manager.appendChild(br);
 
     // That's cool and all, but if changing the buttons does nothing, that ain't good.
     addBehaviorToDummyUi(index);
 };
 
+/**
+ * Following the generation of an HTML section by addBehaviorToDummyUi(), use this function to add
+ * events to the different elements.
+ * @param {Integer} index: the index of the section where you want events to be listened to
+ */
 let addBehaviorToDummyUi = function(index){
     document.getElementById("maxHP"+index).addEventListener("input", (e) => {
         akGame.dummies[index].maxHP = parseInt(e.target.value);
@@ -232,7 +220,7 @@ let addBehaviorToDummyUi = function(index){
 };
 
 /**
- * 
+ * Makes all fields/buttons interactable or not, used during a simulation to prevent breaking everything
  * @param {Boolean} isEnabled: true if the fieldsets should be interactable by the user, false otherwise
  */
 let setFieldsetsInteractable = function(isEnabled){

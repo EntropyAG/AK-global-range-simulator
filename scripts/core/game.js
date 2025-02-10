@@ -66,11 +66,12 @@ class Game {
 		let self = this;
 		document.getElementById("startSimulation").classList.add("hide");
 		document.getElementById("pauseSimulation").classList.remove("hide");
-		this.isPaused = false;
-		this.lappland.atkMultBuff = parseInt(document.getElementById("atkMultBuffs").value);
-		this.lappland.inspirationBuff = parseInt(document.getElementById("inspirationAtk").value);
-		this.lappland.aspdBuff = parseInt(document.getElementById("aspdBuffs").value);
-		this.lappland.activateS3();
+		self.lappland.atkMultBuff = parseInt(document.getElementById("atkMultBuffs").value);
+		self.lappland.inspirationBuff = parseInt(document.getElementById("inspirationAtk").value);
+		self.lappland.aspdBuff = parseInt(document.getElementById("aspdBuffs").value);
+		self.lappland.setAlphaWolf(document.getElementById("extraDrone").checked ? 2 : 1);
+		self.lappland.activateS3();
+		self.isPaused = false;
 
 		self.calculateExpectedDps();
 

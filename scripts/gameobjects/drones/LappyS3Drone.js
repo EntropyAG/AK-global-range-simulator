@@ -25,7 +25,7 @@ class LappyS3Drone extends Drone {
 
 		this.x = this.owner.x;
 		this.y = this.owner.y;
-		this.orientation = orientation;
+		this.setOrientation(orientation);
 
 		this.startingAtkScale = 0.35;
 		this.currentAtkScale = this.startingAtkScale;
@@ -58,19 +58,10 @@ class LappyS3Drone extends Drone {
 	}
 
 	engageSeekNDestroyRoutine(){
-		// We were locked into a target who died, respawn near it
-		if(this.lockedTarget && this.lockedTarget.currHP <= 0){
-			// Respawn in a square of size 1.5 tiles centered on the target
-			// TODO: Strange wolf displacement after target dies? Check frame by frame
-			this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
-			this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;
-			this.currentSpeed = this.postKillSpeed;
-			this.currentAtkScale = this.startingAtkScale;
-		}
+		// The AoE happens at all time, even during the initial phase
 		this.attackAoE(akGame.dummies);
 
 		// Initial delay of 1.3s where no targets are being searched
-		// TODO: Investigate why the wolves apparently go further than what they are supposed to
 		if(akGame.tick < secToFrames(this.initialDelay)){
 			this.moveDirection(this.orientation, this.currentSpeed);
 			this.currentSpeed = Math.min(
@@ -80,38 +71,45 @@ class LappyS3Drone extends Drone {
 			return;
 		}
 
-		let target = this.seek(akGame.dummies);
-		if(!target){
-			return; // The hunt is over, all targets are down, time to nap
+		// We were locked into a target who died, respawn near it
+		if(this.lockedTarget && this.lockedTarget.currHP <= 0){
+			// TODO: Strange wolf displacement after target dies? Check frame by frame
+			this.currentSpeed = this.postKillSpeed;
+			this.currentAtkScale = this.startingAtkScale;
+			// Respawn in a square of size 1.5 tiles centered on the target after it dies,
+			// but only if we were stacked with it (dealing focused damage) 
+			if(this.x === this.lockedTarget.x && this.y === this.lockedTarget.y){
+				this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
+				this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;
+			}
 		}
 
-		this.chase(this.lockedTarget);
+		if(!this.lockedTarget || this.lockedTarget.currHP <= 0){
+			this.lockedTarget = this.seek(akGame.dummies);
+		}
+
+		if(this.lockedTarget){
+			this.chase(this.lockedTarget);
+		}else{ // No targets found, the h0nt is over
+			return;
+		}
+
+
 	}
 
 	// Look for the closest possible target then set it as current target, if it exists
 	seek(targets){
-		// If our current target is alive, keep tracking that one
-		if(this.lockedTarget && this.lockedTarget.currHP > 0){
-			return this.lockedTarget;
-		}
-
-		// Otherwise look for one
 		let closestTarget;
 		for(let target of targets){
-			let targetIsValid = target.currHP > 0 && target.activated === true;
-			if(targetIsValid && !closestTarget){
-				closestTarget = target;
-			}
-
-			if(target === closestTarget || !closestTarget){
+			if(target.currHP <= 0 || target.activated === false){
 				continue;
-			}
-
-			if(this.getDistanceFrom(target) < this.getDistanceFrom(closestTarget) && target.currHP > 0){
+			}else if(!closestTarget){
+				closestTarget = target;
+			}else if(this.getDistanceFrom(target) < this.getDistanceFrom(closestTarget) && target.currHP > 0){
 				closestTarget = target;
 			}
 		}
-		this.lockedTarget = closestTarget;
+		return closestTarget;
 	}
 
 	chase(){
@@ -121,21 +119,24 @@ class LappyS3Drone extends Drone {
 			this.x = this.lockedTarget.x;
 			this.y = this.lockedTarget.y;
 			this.attackFocused();
+			return;
 		}
 
 		// Otherwise, change orientation and position to get closer
+		// For orientation, because it's a value from [0;2*PI[
 		let angleToTarget = this.getAngleTo(this.lockedTarget);
-		if(Math.abs(this.orientation - angleToTarget) < this.nominalTurnRate){
-			this.orientation = angleToTarget;
-		}else if(this.orientation > angleToTarget){
-			this.orientation -= this.nominalTurnRate;
-		}else if(this.orientation < angleToTarget){
-			this.orientation += this.nominalTurnRate;
+		let relativeAngleDiff = this.orientation - angleToTarget;
+		if(Math.abs(relativeAngleDiff) <= this.nominalTurnRate){
+			this.setOrientation(angleToTarget);
+		}else if(relativeAngleDiff < 0){
+			this.setOrientation(this.orientation + this.nominalTurnRate);
+		}else if(relativeAngleDiff > 0){
+			this.setOrientation(this.orientation - this.nominalTurnRate);
 		}
 
 		this.moveDirection(this.orientation, this.currentSpeed);
 		this.currentSpeed = Math.min(
-			tilesPerSecToTilesPerFrame(this.initialMaxSpeed),
+			tilesPerSecToTilesPerFrame(this.nominalMaxSpeed),
 			tilesPerSecToTilesPerFrame(this.currentSpeed + this.initialAcceleration)
 		);
 	}

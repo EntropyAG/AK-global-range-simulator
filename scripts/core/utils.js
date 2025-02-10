@@ -3,11 +3,11 @@ let secToFrames = function(sec){
 };
 
 let msToFrames = function(ms){
-    return ms / akGame.fps;
+    return ms / (1000 / akGame.fps);
 };
 
 let framesToMs = function(frameCount){
-    return frameCount * 1000 / (1000 / akGame.fps);
+    return frameCount * 1000 / akGame.fps;
 };
 
 let framesToSec = function(frameCount){
@@ -15,11 +15,11 @@ let framesToSec = function(frameCount){
 };
 
 let tilesPerSecToTilesPerFrame = function(tps){
-    return tps / 1000 * akGame.fps;
+    return tps / 1000 * (1000 / akGame.fps);
 };
 
 let raidiansPerSecToRaidiansPerFrame = function(raidians){
-    return raidians / 1000 * akGame.fps;
+    return raidians / 1000 * (1000 / akGame.fps);
 };
 
 /**

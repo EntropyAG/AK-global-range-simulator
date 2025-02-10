@@ -43,6 +43,10 @@ fieldset[disabled] > button {
   max-height: 400px;
 }
 
+#targetDummyManager > fieldset {
+  margin-bottom: 6px;
+}
+
 .rowExplanation {
   font-style: italic;
   color: #999;

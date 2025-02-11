@@ -71,12 +71,17 @@ class Renderer {
 				(0.25 + dummy.x) * scaleFactor,
 				(0.25 + dummy.y) * scaleFactor
 			);
-			this.ctx.font = "24px Arial";
 			this.ctx.fillStyle = "rgb(40,40,255)";
 			this.ctx.fillText(
 				"RES "+dummy.resistance,
 				(0.25 + dummy.x) * scaleFactor,
 				(0.05 + dummy.y) * scaleFactor
+			);
+			this.ctx.fillStyle = "rgb(255,255,255)";
+			this.ctx.fillText(
+				"ID "+dummy.id,
+				(0.25 + dummy.x) * scaleFactor,
+				(0.75 + dummy.y) * scaleFactor
 			);
 		}
 	}

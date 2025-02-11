@@ -10,10 +10,6 @@ class GameObject {
 		if (this.constructor === GameObject) {
 		  throw new Error("Cannot instantiate abstract class [GameObject].");
 		}
-		// Just to make entities have a somewhat unique ID.
-		// "But there might be collisions :( :( :("
-		// Ya ya, whatever, it's just in the logs...
-		this.id = Math.round(Math.random() * 10000000);
 	}
 
 	// ############### Positioning ###############

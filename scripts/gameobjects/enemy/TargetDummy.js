@@ -4,8 +4,9 @@ class TargetDummy extends Character {
 	currHP;
 	size = 0.3;
 
-	constructor(x, y, hitpoints, res) {
+	constructor(id, x, y, hitpoints, res) {
 		super();
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.maxHP = hitpoints;

@@ -20,7 +20,7 @@ document.getElementById("lappyPosY").addEventListener("input", (e) => {
 
 document.getElementById("addDummy").addEventListener("click", (e) => {
     addNewTargetDummySection();
-    akGame.dummies.push(new TargetDummy(5, 5, 10000, 0));
+    akGame.dummies.push(new TargetDummy(akGame.dummies.length, 5, 5, 10000, 0));
     akRenderer.display();
 });
 
@@ -207,12 +207,13 @@ let addBehaviorToDummyUi = function(index){
 
     document.getElementById("duplicateDummy"+index).addEventListener("click", (e) => {
         let dummyToDuplicate = akGame.dummies[index];
-        let newDummy = new TargetDummy(5, 5, 10000, 0);
-        newDummy.x = dummyToDuplicate.x;
-        newDummy.y = dummyToDuplicate.y;
-        newDummy.currHP = dummyToDuplicate.currHP;
-        newDummy.maxHP = dummyToDuplicate.maxHP;
-        newDummy.resistance = dummyToDuplicate.resistance;
+        let newDummy = new TargetDummy(
+            akGame.dummies.length,
+            dummyToDuplicate.x,
+            dummyToDuplicate.y + 0.1, // Slight displacement to make it easier to spot
+            dummyToDuplicate.maxHP,
+            dummyToDuplicate.resistance
+        );
         addNewTargetDummySection(newDummy);
         akGame.dummies.push(newDummy);
         akRenderer.display();

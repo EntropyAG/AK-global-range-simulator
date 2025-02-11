@@ -73,13 +73,12 @@ class Game {
 		self.lappland.activateS3();
 		self.isPaused = false;
 
-		self.calculateExpectedDps();
-
 		this.interval = setInterval(function(){
 			if(self.isPaused){
 				return;
 			}
 
+			self.calculateExpectedDps();
 			self.calculateActualDps();
 			updateDisplayedMetrics();
 
@@ -170,15 +169,14 @@ class Game {
 		let warmupTime = finalAtkInterval * NB_ATKS_PRE;
 		let pstDuration = SKILL_DURATION - INITIAL_DELAY - warmupTime;
 
-
 		let expectedDpsFocused = (pstDroneDps * pstDuration + preDroneDps * warmupTime) / SKILL_DURATION;
 		let expectedDpsAoEDoT = finalAtk*AOE_DOT_ATK_MULT;
 		let expectedDpsBoth = expectedDpsAoEDoT + expectedDpsFocused;
-		let expectedTotalDmgFocused = expectedDpsFocused * SKILL_DURATION;
-		let expectedTotalDmgAoEDoT = expectedDpsAoEDoT * SKILL_DURATION;
+		// Because we can't expect to do damage during the initial delay (1.3s)
+		let expectedTotalDmgFocused = Math.max(expectedDpsFocused * (this.dpsMetrics.time - INITIAL_DELAY), 0);
+		let expectedTotalDmgAoEDoT = expectedDpsAoEDoT * this.dpsMetrics.time;
 		let expectedTotalDmgBoth = expectedTotalDmgFocused + expectedTotalDmgAoEDoT;
 
-		this.dpsMetrics.time = 0;
 		this.dpsMetrics.expectedDpsBoth = expectedDpsBoth;
 		this.dpsMetrics.expectedDpsAoEDoT = expectedDpsAoEDoT;
 		this.dpsMetrics.expectedDpsFocused = expectedDpsFocused;

@@ -125,12 +125,12 @@ class LappyS3Drone extends Drone {
 		// Otherwise, change orientation and position to get closer
 		// For orientation, because it's a value from [0;2*PI[
 		let angleToTarget = this.getAngleTo(this.lockedTarget);
-		let relativeAngleDiff = this.orientation - angleToTarget;
-		if(Math.abs(relativeAngleDiff) <= this.nominalTurnRate){
+		let relativeAngle = this.getAngleRelativeToOrientation(this, this.lockedTarget);
+		if(Math.abs(relativeAngle) <= this.nominalTurnRate){
 			this.setOrientation(angleToTarget);
-		}else if(relativeAngleDiff > Math.PI){
+		}else if(relativeAngle > this.nominalTurnRate){
 			this.setOrientation(this.orientation + this.nominalTurnRate);
-		}else{
+		}else if(relativeAngle < this.nominalTurnRate){
 			this.setOrientation(this.orientation - this.nominalTurnRate);
 		}
 		this.moveDirection(this.orientation, tilesPerSecToTilesPerFrame(this.currentSpeed));

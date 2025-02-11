@@ -29,6 +29,24 @@ class GameObject {
 		return angle < 0 ? angle + Math.PI * 2 : angle;
 	}
 
+	/**
+	 * Returns relative angle between this object's orientation and another object.
+	 * The result will be a value from -PI to +PI. Basically: draw a line parallel to
+	 * this' orientation passing through its center, then check whether the other object
+	 * is on its right (in which case the value returned will be between 0 and +PI) or if
+	 * it is on its left (in which case the value returned will be between 0 and -PI)
+	 */
+	getAngleRelativeToOrientation(obj){
+		let relativeAngle = this.getAngleTo(obj) - this.orientation;
+		relativeAngle = relativeAngle % (Math.PI * 2);
+		if(relativeAngle > Math.PI){
+			relativeAngle -= (2 * Math.PI);
+		}else if(relativeAngle < - Math.PI){
+			relativeAngle += (2 * Math.PI);
+		}
+		return relativeAngle;
+	};
+
 	// Angle in ra(i)dians, distance in tiles (and no I won't tire of this joke)
 	moveDirection(angle, distance) {
 		this.x += Math.cos(angle) * distance;

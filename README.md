@@ -1,20 +1,17 @@
-==============================================
-= ---- Arknights Global Range Simulator ---- =
-==============================================
+Arknights Global Range Simulator
+================================
 
-"""
-Greetings Doktah,
+<i>Greetings Doktah,
 
-This project should allow you to easily evaluate Lappland alter's skill 3 performance
-in actual combat scenarios. Hopefully this should give you enough information to decide
-whether to put that crazy gal into a locker and stick to sending Goldenglow to the field
-or if the insane wolf girl has her uses.
+This project should allow you to easily evaluate Lappland alter's skill 3 performance<br/>
+in actual combat scenarios. Hopefully this should give you enough information to decide<br/>
+whether to put that crazy gal into a locker and stick to sending Goldenglow to the field<br/>
+or if the insane wolf girl has her uses.</i>
 
-- Closure
-"""
+-Closure
 
 How to get the application
-==========================
+--------------------------
 
 - Download the project by clicking on Code > Download ZIP
 - Unzip the file by right clicking on the downloaded file > Extract All
@@ -22,40 +19,40 @@ How to get the application
   it should open it using your web browser (Firefox, Chrome, Edge...)
 
 How to use the application
-==========================
+--------------------------
 
 On the left of the screen, you have a menu that allows you to setup the simulation
 however you want. Let's go over the options Doktah!
-- Extra drone? => Lappland sends 3 drones away on skill activation unless her talent Alpha Wolf
+- **Extra drone?** => Lappland sends 3 drones away on skill activation unless her talent Alpha Wolf
 enables its last effect. If the checkbox is checked, it will send 4 drones instead!
-- Position X/Y => Simply move Lappland on which tile you want her to be
-- Flat ATK (inspiration) => Is here to emulate abilities from Bards, like Sora S2 or Skadi alter S2/S3.
+- **Position X/Y** => Simply move Lappland on which tile you want her to be
+- **Flat ATK (inspiration)** => Is here to emulate abilities from Bards, like Sora S2 or Skadi alter S2/S3.
 Keep in mind that only 1 bard can buff Lappland at once!
-- ATK % buffs => Any external buff, if no one else is there to buff Lappland, you can leave it as is! If you have
+- **ATK % buffs** => Any external buff, if no one else is there to buff Lappland, you can leave it as is! If you have
 several buffers, like Warfarin S2M3 (90%) and Aak S3M3 (50%), then simply add up the buffs together! (140%)
-- ASPD buffs => Same as above, add up any external source of ASPD and you're set!
+- **ASPD buffs** => Same as above, add up any external source of ASPD and you're set!
 
 Alright, your Lappland is in position and has the buffs... Now what?
 
 Now we need to put a bunch of target dummies, so that we can send those adorable puppies to murder them!
 
-Click on the "Add Dummy" button and you will see a new section pop up. Within it, you can set the maximum HP,
+Click on the **Add Dummy** button and you will see a new section pop up. Within it, you can set the maximum HP,
 resistance (RES) and position of the dummy.
 
-If you want to add more dummies, you can click "Add Dummy" again or if you don't want to copy the stats/position
-again, you can click "Duplicate" on an existing one!
+If you want to add more dummies, you can click **Add Dummy** again or if you don't want to copy the stats/position
+again, you can click **Duplicate** on an existing one!
 
-If you happen to create a dummy by accident, you can safely "Delete" them. You can also click on "Deactivate" If
+If you happen to create a dummy by accident, you can safely **Delete** them. You can also click on **Deactivate** If
 you wish to simply make a dummy invisible for the next simulation, they won't be targeted by the wolves then (no fun!)
 
-Once you're satisfied with the target dummies, you can click on "Start" and watch the massacre! You can also click on "Pause"
+Once you're satisfied with the target dummies, you can click on **Start** and watch the massacre! You can also click on **Pause**
 to admire the view or take a look at the stats at the bottom of the application (scroll down if you don't see them!)
 
-You can also "Reset" a simulation anytime to take back control, it will restore all dummies' HP back to full and the drones
+You can also **Reset** a simulation anytime to take back control, it will restore all dummies' HP back to full and the drones
 will be back on Lappland, ready for another round.
 
 There are so many numbers at the bottom, I'm scared! What do they mean?
-=======================================================================
+-----------------------------------------------------------------------
 
 First: don't panic!
 
@@ -88,7 +85,6 @@ The next row "Actual vs expected AoE DoT DPS (%)" is the same, but for the DoT a
 Finally, "Actual vs expected total damage (%)" is how much damage was actually done compared to what you would expect from the initial
 scenario.
 
-If you want to get the full analysis, go to the spreadsheet and check the "Lappy S3 travel time" section!
+If you want to get the full analysis, go to the [spreadsheet](https://docs.google.com/spreadsheets/d/1CdB0e55XNFu5yQu3Xb4MD_3kLEsfGjm_dlwV0H4yLEc) and check the "Lappy S3 travel time" section!
 
-https://docs.google.com/spreadsheets/d/1CdB0e55XNFu5yQu3Xb4MD_3kLEsfGjm_dlwV0H4yLEc
-
+Have fun!

@@ -1,8 +1,8 @@
 let getMouseCoords = (canvas, event) => {
     let canvasCoords = canvas.getBoundingClientRect();
     return {
-        x: event.pageX - canvasCoords.left,
-        y: event.pageY - canvasCoords.top + canvasCoords.y
+        x: event.pageX - canvasCoords.left + canvasCoords.x - canvas.offsetLeft,
+        y: event.pageY - canvasCoords.top + canvasCoords.y - canvas.offsetTop
     };
 };
 
@@ -27,10 +27,9 @@ let updateGameObjectPos = (obj, mouseCoords) => {
     }
 };
 
-// FIXME: Initial select does match the current position of the image but is offset bottom-right by half the size of the image
 let checkIfMouseOnObject = (obj, objCanvasSize, mouseCoords) => {
     let pos = akRenderer.getGameObjectCanvasPos(obj);
-    if (cursorInRect(mouseCoords.x, mouseCoords.y, pos.x, pos.y, objCanvasSize, objCanvasSize)) {
+    if (cursorInRect(mouseCoords.x, mouseCoords.y, pos.x - objCanvasSize/2, pos.y - objCanvasSize/2, objCanvasSize, objCanvasSize)) {
         obj.selected = true;
         obj.offset = getOffsetCoords(mouseCoords, pos);
     } else {

@@ -14,7 +14,6 @@ const SPRITES = {
 class Renderer {
 	canvas;
 	ctx;
-	observer;
 	width = 300;
 	height = 150;
 	lastTickRendered;

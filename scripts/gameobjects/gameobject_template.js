@@ -41,7 +41,7 @@ class GameObject {
 			relativeAngle += (2 * Math.PI);
 		}
 		return relativeAngle;
-	};
+	}
 
 	// Angle in ra(i)dians, distance in tiles (and no I won't tire of this joke)
 	moveDirection(angle, distance) {

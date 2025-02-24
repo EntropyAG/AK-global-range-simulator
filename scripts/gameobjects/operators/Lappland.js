@@ -39,7 +39,6 @@ class Lappland extends Character {
 	}
 
 	/**
-	 * 
 	 * @param {Integer} tier: 0 = no buffs, 1 = +10% drone max ATK scale (multiplicative), 2 = additional drone
 	 */
 	setAlphaWolf(tier){

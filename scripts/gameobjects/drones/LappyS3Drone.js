@@ -72,7 +72,7 @@ class LappyS3Drone extends Drone {
 			this.currentSpeed = this.postKillSpeed;
 			this.currentAtkScale = this.startingAtkScale;
 			// Respawn in a square of size 1.5 tiles centered on the target after it dies,
-			// but only if we were stacked with it (dealing focused damage) 
+			// but only if we were stacked with it (dealing focused damage)
 			if(this.x === this.lockedTarget.x && this.y === this.lockedTarget.y){
 				this.x = Math.random() * 1.5 + this.lockedTarget.x - 0.75 ;
 				this.y = Math.random() * 1.5 + this.lockedTarget.y - 0.75 ;

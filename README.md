@@ -10,6 +10,8 @@ or if the insane wolf girl has her uses.</i>
 
 -Closure
 
+![](images/showcase.gif)
+
 How to get the application
 --------------------------
 
@@ -25,7 +27,6 @@ On the left of the screen, you have a menu that allows you to setup the simulati
 however you want. Let's go over the options Doktah!
 - **Extra drone?** => Lappland sends 3 drones away on skill activation unless her talent Alpha Wolf
 enables its last effect. If the checkbox is checked, it will send 4 drones instead!
-- **Position X/Y** => Simply move Lappland on which tile you want her to be
 - **Flat ATK (inspiration)** => Is here to emulate abilities from Bards, like Sora S2 or Skadi alter S2/S3.
 Keep in mind that only 1 bard can buff Lappland at once!
 - **ATK % buffs** => Any external buff, if no one else is there to buff Lappland, you can leave it as is! If you have
@@ -49,6 +50,8 @@ to admire the view or take a look at the stats at the bottom of the application 
 
 You can also **Reset** a simulation anytime to take back control, it will restore all dummies' HP back to full and the drones
 will be back on Lappland, ready for another round.
+
+![](images/weeeeeeee.gif)
 
 There are so many numbers at the bottom, I'm scared! What do they mean?
 -----------------------------------------------------------------------

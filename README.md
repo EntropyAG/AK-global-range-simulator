@@ -36,8 +36,7 @@ Alright, your Lappland is in position and has the buffs... Now what?
 
 Now we need to put a bunch of target dummies, so that we can send those adorable puppies to murder them!
 
-Click on the **Add Dummy** button and you will see a new section pop up. Within it, you can set the maximum HP,
-resistance (RES) and position of the dummy.
+Click on the **Add Dummy** button and you will see a new section pop up. Within it, you can set the maximum HP of the dummy.
 
 If you want to add more dummies, you can click **Add Dummy** again or if you don't want to copy the stats/position
 again, you can click **Duplicate** on an existing one!

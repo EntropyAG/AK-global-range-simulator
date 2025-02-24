@@ -35,10 +35,6 @@ class LappyS3Drone extends Drone {
 		// When starting a simulation, no attack has been done yet, so we just set it far in the past
 		this.prevAtkIntervalTick = -9999;
 
-		// No explosions, tho that'd be funny if the wolves could explode. Actually, there'd be hair everywhere
-		// and that'd be a pain to clean everything up, nevermind then.
-		this.isExploding = false;
-
 		// AoE DoT
 		this.hasAoEDot = true;
 		this.aoeDotAtkScale = 1.2;
@@ -73,7 +69,6 @@ class LappyS3Drone extends Drone {
 
 		// We were locked into a target who died, respawn near it
 		if(this.lockedTarget && this.lockedTarget.currHP <= 0){
-			// TODO: Strange wolf displacement after target dies? Check frame by frame
 			this.currentSpeed = this.postKillSpeed;
 			this.currentAtkScale = this.startingAtkScale;
 			// Respawn in a square of size 1.5 tiles centered on the target after it dies,
@@ -151,10 +146,7 @@ class LappyS3Drone extends Drone {
 				continue;
 			}
 
-			let finalDamage = Math.round(Math.max(
-				this.owner.getFinalAtk() * this.aoeDotAtkScale * (1 - (target.resistance/100)),
-				this.owner.getFinalAtk() * this.aoeDotAtkScale * 0.05
-			));
+			let finalDamage = Math.round(this.owner.getFinalAtk() * this.aoeDotAtkScale);
 
 			target.currHP -= finalDamage;
 
@@ -173,15 +165,10 @@ class LappyS3Drone extends Drone {
 		this.prevAtkIntervalTick = akGame.tick;
 
 		let finalDroneAtk = Math.round(this.owner.getFinalAtk() * this.currentAtkScale);
-		// The max() is used to account for the minimum damage dealt against targets with 95 RES or higher
-		let finalDamage = Math.round(Math.max(
-			finalDroneAtk * (1 - (this.lockedTarget.resistance/100)),
-			finalDroneAtk * 0.05
-		));
 
-		this.lockedTarget.currHP -= finalDamage;
+		this.lockedTarget.currHP -= finalDroneAtk;
 
-		let finalRecordedDmg = this.lockedTarget.currHP < 0 ? finalDamage + this.lockedTarget.currHP : finalDamage;
+		let finalRecordedDmg = this.lockedTarget.currHP < 0 ? finalDroneAtk + this.lockedTarget.currHP : finalDroneAtk;
 		akGame.focusedDamageInstances.push(finalRecordedDmg);
 
 		if(this.lockedTarget.currHP > 0){

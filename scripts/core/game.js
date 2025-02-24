@@ -1,3 +1,10 @@
+const AVG_PRE_ATK_SCALE = 0.725;
+const MAX_ATK_SCALE = 1.21;
+const NB_ATKS_PRE = 6;
+const AOE_DOT_ATK_MULT = 1.2;
+const SKILL_DURATION = 40;
+const INITIAL_DELAY = 1.3;
+
 class Game {
 	isPaused = true;
 	interval;
@@ -53,7 +60,6 @@ class Game {
 		}
 		document.getElementById("startSimulation").classList.remove("hide");
 		document.getElementById("pauseSimulation").classList.add("hide");
-		akRenderer.display(self);
 		setFieldsetsInteractable(true);
 	}
 
@@ -104,7 +110,6 @@ class Game {
 			}
 
 			// Ok we done for this game tick, go to the next tick
-			akRenderer.display();
 			akGame.tick++;
 			self.dpsMetrics.time = framesToSec(self.tick);
 
@@ -152,12 +157,6 @@ class Game {
 	 * Based on the same formulas as the spreadsheet, when in doubt use it directly
 	 */
 	calculateExpectedDps(){
-		const AVG_PRE_ATK_SCALE = 0.725;
-		const MAX_ATK_SCALE = 1.21;
-		const NB_ATKS_PRE = 6;
-		const AOE_DOT_ATK_MULT = 1.2;
-		const SKILL_DURATION = 40;
-		const INITIAL_DELAY = 1.3;
 		let finalAtk = this.lappland.getFinalAtk();
 		let finalAtkInterval = this.lappland.getFinalAtkInterval();
 		let droneCount = this.lappland.getDroneCount();

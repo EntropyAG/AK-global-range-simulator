@@ -3,8 +3,6 @@ class Character extends GameObject {
 	attack;
 	atkInterval;
 	hitpoints;
-	resistance;
-	resIgnore;
 	atkMult;
 	atkMultBuff;
 	aspdBuff;

@@ -40,7 +40,9 @@ fieldset[disabled] > button {
 
 #targetDummyManager {
   overflow-y: scroll;
-  max-height: 400px;
+  display: block;
+  height: 100%;
+  max-height: 500px;
 }
 
 #targetDummyManager > fieldset {
@@ -87,7 +89,6 @@ fieldset[disabled] > button {
 
 .container > div.content {
   grid-area: content;
-  height:800px;
 }
 
 .container > div.footer {
@@ -128,4 +129,9 @@ canvas, img {
     align-items: center;
     margin: 0 auto;
     height: inherit;
+}
+
+canvas {
+  width: 100%;
+  display: block;
 }

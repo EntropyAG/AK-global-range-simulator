@@ -9,7 +9,6 @@ class Lappland extends Character {
 		this.x = x;
 		this.y = y;
 		this.atkInterval = 1.3;
-		this.resIgnore = 0;
 		this.isSiracusanPleasureEnabled = true;
 		this.isS3Enabled = false;
 		this.atkMult = 0;

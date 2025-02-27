@@ -5,16 +5,26 @@ const AOE_DOT_ATK_MULT = 1.2;
 const SKILL_DURATION = 40;
 const INITIAL_DELAY = 1.3;
 
+/**
+ * Manages the general game loop, keeps tracks of all game objects and stores all
+ * the damage instances and associated metrics
+ */
 class Game {
 	isPaused = true;
-	interval;
-	tick = 0;
-	fps = 30;
+	interval; // The interval which runs the engine itself
+	tick = 0; // Current game tick
+	fps = 30; // Frames Per Second
+
+	// The various game objects
 	lappland;
 	drones = [];
 	dummies = [];
+
+	// Used to keep track of where we are in the array when creating/deleted new dummies
+	// to avoid messing things up when adding listeners
 	dummyMaxIndex = 0;
-	logs = [];
+
+	// The metrics used to feed the table at the bottom of the page
 	focusedDamageInstances = [];
 	aoeDotDamageInstances = [];
 	dpsMetrics = {
@@ -34,9 +44,11 @@ class Game {
 		"actualDmgBothTotal": 0,
 		"actualVsExpectedTotalDmgRatio": 0
 	};
+
 	tilesX; // Number of tiles in the X axis
 	tilesY; // Number of tiles in the Y axis
 
+	// Singleton
 	constructor(){
 		if (Game._instance) {
 			return Game._instance;
@@ -46,6 +58,10 @@ class Game {
 		this.tilesY = 9;
 	}
 
+	/**
+	 * Only activated when the user presses the "Reset" button.
+	 * Sets all variables back to normal so that another simulation can be started right away.
+	 */
 	resetSimulation() {
 		this.isPaused = true;
 		this.tick = 0;
@@ -63,10 +79,16 @@ class Game {
 		setFieldsetsInteractable(true);
 	}
 
+	// It... Pauses... The... Simulation. What, what did you expect?
 	pauseSimulation(){
 		this.isPaused = !this.isPaused;
 	}
 
+	/**
+	 * Does 2 major things:
+	 * - It sets the stats for Lappland based on what the user decided to input
+	 * - It starts the interval used for the main game loop.
+	 */
 	startSimulation(){
 		setFieldsetsInteractable(false);
 		let self = this;
@@ -116,17 +138,24 @@ class Game {
 		}, 1000 / this.fps);
 	}
 
+	// It... Ends... Th- Ok, you know what? There are 2 lines to read. You got eyes, don't you?
 	endSimulation(){
 		this.isPaused = true;
 		setFieldsetsInteractable(true);
 	}
 
+	// I'm done with you if you can get that one
 	resetCombatLog(){
-		this.logs = [];
 		this.focusedDamageInstances = [];
 		this.aoeDotDamageInstances = [];
 	}
 
+	/**
+	 * Recalculate the "actual" DPS metrics (not the expected DPS, it's already done at the start).
+	 * This is done by saving all the damage instances of both the focused damage and the AoE in 2
+	 * separate arrays, adding their respective numbers up and calculating the rest of the metrics
+	 * from there.
+	 */
 	calculateActualDps(){
 		if(this.dpsMetrics.time === 0){
 			return;
@@ -145,6 +174,7 @@ class Game {
 
 		this.dpsMetrics.actualDpsFocused = sumFocused / this.dpsMetrics.time;
 		this.dpsMetrics.actualDpsAoEDoT = sumAoeDot / this.dpsMetrics.time;
+		// The metrics shown to the user are in %, hence the * 100
 		this.dpsMetrics.actualVsExpectedFocusedDpsRatio =
 			this.dpsMetrics.actualDpsFocused / this.dpsMetrics.expectedDpsFocused * 100;
 		this.dpsMetrics.actualVsExpectedAoEDoTDpsRatio =
@@ -171,7 +201,7 @@ class Game {
 		let expectedDpsFocused = (pstDroneDps * pstDuration + preDroneDps * warmupTime) / SKILL_DURATION;
 		let expectedDpsAoEDoT = finalAtk*AOE_DOT_ATK_MULT;
 		let expectedDpsBoth = expectedDpsAoEDoT + expectedDpsFocused;
-		// Because we can't expect to do damage during the initial delay (1.3s)
+		// Because we can't expect to do focused damage during the initial delay (1.3s)
 		let expectedTotalDmgFocused = Math.max(expectedDpsFocused * (this.dpsMetrics.time - INITIAL_DELAY), 0);
 		let expectedTotalDmgAoEDoT = expectedDpsAoEDoT * this.dpsMetrics.time;
 		let expectedTotalDmgBoth = expectedTotalDmgFocused + expectedTotalDmgAoEDoT;

@@ -1,9 +1,11 @@
+// Factor used when rendering different GameObjects
 const SCALES = {
 	LAPPLAND: 0.9,
 	DUMMY: 0.5,
 	DRONE: 0.5
 };
 
+// see {root}/images/sprites.png
 const SPRITES = {
 	LAPPLAND:   { X: 0, Y: 0, WIDTH: 279, HEIGHT: 279 },
 	DUMMY:      { X: 279, Y: 0, WIDTH: 279, HEIGHT: 279 },
@@ -11,13 +13,19 @@ const SPRITES = {
 	DRONE:      { X: 0, Y: 279, WIDTH: 279, HEIGHT: 279 },
 };
 
+/**
+ * Renders the various {GameObject}s on a 2D HTMLCanvas
+ */
 class Renderer {
 	canvas;
 	ctx;
+
+	// Default values used to display the canvas, to at least make it visible if things go wrong
 	width = 300;
 	height = 150;
 	lastTickRendered;
 
+	// Singleton
 	constructor() {
 		if (Renderer._instance) {
 			return Renderer._instance;
@@ -28,22 +36,35 @@ class Renderer {
 		this.lastTickRendered = -1;
 	}
 
+	// Returns the ratio of the width of the canvas by the game tiles
+	// which should only be useful for scaling objects within the canvas itself
 	getScaleFactor(){
 		return this.canvas.width / akGame.tilesX;
 	}
 
+	// Returns the ratio of the width of the canvas by the game tiles
+	// for objects that aren't drawn within the canvas itself (e.g to reference
+	// a mouse click within that canvas)
 	getBoundedScaleFactor(){
 		return this.canvas.getBoundingClientRect().width / akGame.tilesX;
 	}
 
+	// Returns the size (in pixels) of the dummy as displayed to the client
 	getDummySize(){
 		return SCALES.DUMMY * akRenderer.canvas.getBoundingClientRect().width / akGame.tilesX;
 	}
 
+	// Returns the size (in pixels) of Lappland as displayed to the client
 	getLappySize(){
 		return SCALES.LAPPLAND * akRenderer.canvas.getBoundingClientRect().width / akGame.tilesX;
 	}
 
+	/**
+	 * Returns the relative position (in pixels) of the top-left corner of a GameObject
+	 * within the canvas
+	 * @param {GameObject} obj: the object whose position should be returned
+	 * @returns {Object} with coordinates x;y, matching the top-left corner of the GameObject
+	 */
 	getGameObjectCanvasPos(obj){
 		return {
 			x: obj.x * akRenderer.canvas.getBoundingClientRect().width / akGame.tilesX,
@@ -116,6 +137,7 @@ class Renderer {
 				(dummy.x - SCALES.DUMMY / 2) * scaleFactor, (dummy.y - SCALES.DUMMY / 2) * scaleFactor, // pos in canvas
 				SCALES.DUMMY * scaleFactor, SCALES.DUMMY * scaleFactor // size in canvas
 			);
+			// Text showing the ID and the remaining HP of each dummy
 			akRenderer.ctx.font = "24px Arial";
 			akRenderer.ctx.fillStyle = "rgb(0,0,0)";
 			akRenderer.ctx.fillText(
@@ -130,6 +152,7 @@ class Renderer {
 				(0.20 + dummy.y) * scaleFactor
 			);
 		}
+
 		requestAnimationFrame(akRenderer.display);
 	}
 }

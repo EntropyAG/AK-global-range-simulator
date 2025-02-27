@@ -1,6 +1,5 @@
 class LappyS3Drone extends Drone {
 
-	prevAtkIntervalTick;
 	aoeDotAtkScale;
 	aoeDotRadius;
 	initialDelay; // In seconds, delay after skill activation before wolves start chasing targets
@@ -12,8 +11,6 @@ class LappyS3Drone extends Drone {
 	nominalAcceleration;
 	nominalMaxSpeed;
 	nominalTurnRate; // 1/6 of a full rotation or PI/3 ra(i)dians
-	lockedTarget; // Once a target is locked, the drone will chase that target even if another gets closer in
-	  // the meantime
 
 	constructor(owner, orientation) {
 		super();
@@ -36,21 +33,20 @@ class LappyS3Drone extends Drone {
 		this.prevAtkIntervalTick = -9999;
 
 		// AoE DoT
-		this.hasAoEDot = true;
 		this.aoeDotAtkScale = 1.2;
 		this.aoeDotRadius = 0.9;
 		this.DoTCooldown = 1.0;
 
 		// Movement
-		this.initialDelay = 1.3;
-		this.initialVelocity = 0.1;
-		this.initialAcceleration = 1.9;
+		this.initialDelay = 1.3; // sec
+		this.initialVelocity = 0.1; // Tiles/sec
+		this.initialAcceleration = 1.9; // Tiles/sec²
 		this.initialMaxSpeed = 2.0; // Tiles/sec
 		this.nominalAcceleration = 2.0; // Per sec
 		this.nominalMaxSpeed = 4.0; // Tiles/sec
 		this.nominalTurnRate = Math.PI / 3; // Per frame
-		this.postKillSpeed = 1.0;
-		this.currentSpeed = this.initialVelocity;
+		this.postKillSpeed = 1.0; // Tiles/sec
+		this.currentSpeed = this.initialVelocity; // Tiles/sec
 	}
 
 	engageSeekNDestroyRoutine(){
@@ -79,17 +75,14 @@ class LappyS3Drone extends Drone {
 			}
 		}
 
+		// If there is no target locked (or they are dead) seek a new one
 		if(!this.lockedTarget || this.lockedTarget.currHP <= 0){
 			this.lockedTarget = this.seek(akGame.dummies);
 		}
 
 		if(this.lockedTarget){
 			this.chase(this.lockedTarget);
-		}else{ // No targets found, the h0nt is over
-			return;
 		}
-
-
 	}
 
 	// Look for the closest possible target then set it as current target, if it exists
@@ -119,6 +112,8 @@ class LappyS3Drone extends Drone {
 
 		// Otherwise, change orientation and position to get closer
 		// For orientation, because it's a value from [0;2*PI[
+		// we check the relative angle compared to the direction the drone is facing
+		// so that we know in which direction to turn
 		let angleToTarget = this.getAngleTo(this.lockedTarget);
 		let relativeAngle = this.getAngleRelativeToOrientation(this.lockedTarget);
 		if(Math.abs(relativeAngle) <= this.nominalTurnRate){
@@ -150,6 +145,7 @@ class LappyS3Drone extends Drone {
 
 			target.currHP -= finalDamage;
 
+			// We don't want to record any overkill damage, so we remove any part that drops below 0
 			let finalRecordedDmg = target.currHP < 0 ? finalDamage + target.currHP : finalDamage;
 			akGame.aoeDotDamageInstances.push(finalRecordedDmg);
 			target.hitByAoEDoTFrame = akGame.tick;
@@ -168,6 +164,7 @@ class LappyS3Drone extends Drone {
 
 		this.lockedTarget.currHP -= finalDroneAtk;
 
+		// We don't want to record any overkill damage, so we remove any part that drops below 0
 		let finalRecordedDmg = this.lockedTarget.currHP < 0 ? finalDroneAtk + this.lockedTarget.currHP : finalDroneAtk;
 		akGame.focusedDamageInstances.push(finalRecordedDmg);
 

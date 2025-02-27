@@ -1,3 +1,7 @@
+/**
+ * Various conversion functions
+ */
+
 let secToFrames = function(sec){
     return msToFrames(1000 * sec);
 };
